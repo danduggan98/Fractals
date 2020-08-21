@@ -1,20 +1,24 @@
 fn main() {
-    let result = compute_fractal(1000, 1000, 0.0, 0.0, 100); //Test value
+    let result = compute_fractal(100, 100, 0.0, 0.0, 100); //Test value
     println!("There were {} points on the mandelbrot", check_fractal(result));
 }
 
-fn compute_fractal(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u32) -> Vec<u32> {
+fn compute_fractal(width: i32, height: i32, x_0: f32, y_0: f32, max_iterations: u32) -> Vec<u32> {
     println!("Computing fractal with width {} and height {}", width, height);
+    
+    //Store the result in 2-dimensional array (FIGURE THIS OUT)
     let mut output = Vec::new();
 
-    /*
-    //Natural bounds of the mandelbrot
-    let range_horizontal = 3;
-    let range_vertical = 2;
+    //Convert the pixels into real coordinates
+    const X_MIN: f32 = -2.0;
+    const X_MAX: f32 = 1.0;
+    const Y_MIN: f32 = -1.0;
+    const Y_MAX: f32 = 1.0;
 
-    let pixel_length_w = range_horizontal / width;
-    let pixel_length_h = range_vertical / height;
-    */
+    let pixel_width = (X_MAX - X_MIN) / (width as f32);
+    let pixel_height = (Y_MAX - Y_MIN) / (height as f32);
+
+    println!("Using pixel width {} and pixel height {}", pixel_width, pixel_height);
 
     //Calculate the result for each pixel
     let mut x: f32;
@@ -23,8 +27,12 @@ fn compute_fractal(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: 
     let mut y_squared: f32;
     let mut iterations: u32;
 
-    for pixel_x in 0..width {
-        for pixel_y in 0..height {
+    //iterate
+    let mut pixel_x = X_MIN as f32;
+    let mut pixel_y = Y_MIN as f32;
+
+    while pixel_x < X_MAX {
+        while pixel_y < Y_MAX {
             y = 0.0;
             x_squared = 0.0;
             y_squared = 0.0;
@@ -37,13 +45,16 @@ fn compute_fractal(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: 
                 y_squared = y * y;
                 iterations += 1;
             }
+            pixel_y += pixel_height;
 
             //Convert the number of iterations to a color value, then store it
             //Need a const to multiply the iteration num by to map it between white and black
             //..convert..
             output.push(iterations);
-            //println!("({},{}) = {}", pixel_x, pixel_y, iterations);
+            println!("({},{}) = {}", pixel_x, pixel_y, iterations);
+
         }
+        pixel_x += pixel_width;
     }
     return output;
 }
