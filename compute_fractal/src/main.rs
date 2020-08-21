@@ -1,13 +1,19 @@
+// Performance improvements
+// - Use ndarray's instead of vectors for faster traversal
+// - Try smaller data types for certain values
+
 fn main() {
-    let result = compute_fractal(100, 100, 0.0, 0.0, 100); //Test value
-    println!("There were {} points on the mandelbrot", check_fractal(result));
+    const MAX_ITERATIONS: u32 = 100;
+    let result = compute_fractal(2000, 1500, 0.0, 0.0, MAX_ITERATIONS); //Test value
+
+    println!("There were {} points on the mandelbrot", check_fractal(result, MAX_ITERATIONS));
 }
 
-fn compute_fractal(width: i32, height: i32, x_0: f32, y_0: f32, max_iterations: u32) -> Vec<u32> {
+fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iterations: u32) -> Vec<Vec<u32>> {
     println!("Computing fractal with width {} and height {}", width, height);
     
-    //Store the result in 2-dimensional array (FIGURE THIS OUT)
-    let mut output = Vec::new();
+    //Store the result in 2-dimensional vector
+    let mut results_array = vec![vec![0; width]; height];
 
     //Convert the pixels into real coordinates
     const X_MIN: f32 = -2.0;
@@ -30,6 +36,7 @@ fn compute_fractal(width: i32, height: i32, x_0: f32, y_0: f32, max_iterations: 
     //iterate
     let mut pixel_x = X_MIN as f32;
     let mut pixel_y = Y_MIN as f32;
+    let mut array_row: usize = 0;
 
     while pixel_x < X_MAX {
         while pixel_y < Y_MAX {
@@ -50,21 +57,26 @@ fn compute_fractal(width: i32, height: i32, x_0: f32, y_0: f32, max_iterations: 
             //Convert the number of iterations to a color value, then store it
             //Need a const to multiply the iteration num by to map it between white and black
             //..convert..
-            output.push(iterations);
-            println!("({},{}) = {}", pixel_x, pixel_y, iterations);
+            results_array[array_row].push(iterations);
+            //println!("({},{}) = {}", pixel_x, pixel_y, iterations);
 
         }
         pixel_x += pixel_width;
+        array_row += 1;
     }
-    return output;
+    return results_array;
 }
 
 //Helper function to check if the calculation is working
-fn check_fractal(data: Vec<u32>) -> u32 {
+fn check_fractal(data: Vec<Vec<u32>>, max: u32) -> u32 {
     let mut members: u32 = 0;
-    for point in data.iter() {
-        if point < &100 {
-            members += 1;
+
+    //Count the number of points that fall within the set
+    for row in data {
+        for col in row {
+            if col < max {
+                members += 1;
+            }
         }
     }
     return members;
