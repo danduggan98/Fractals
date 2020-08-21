@@ -1,8 +1,9 @@
 fn main() {
-    compute_fractal(10, 10, 0.0, 0.0, 100); //Test value
+    let result = compute_fractal(1000, 1000, 0.0, 0.0, 100); //Test value
+    println!("There were {} points on the mandelbrot", check_fractal(result));
 }
 
-fn compute_fractal(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u32) {
+fn compute_fractal(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u32) -> Vec<u32> {
     println!("Computing fractal with width {} and height {}", width, height);
     let mut output = Vec::new();
 
@@ -41,7 +42,19 @@ fn compute_fractal(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: 
             //Need a const to multiply the iteration num by to map it between white and black
             //..convert..
             output.push(iterations);
-            println!("({},{}) = {}", pixel_x, pixel_y, iterations);
+            //println!("({},{}) = {}", pixel_x, pixel_y, iterations);
         }
     }
+    return output;
+}
+
+//Helper function to check if the calculation is working
+fn check_fractal(data: Vec<u32>) -> u32 {
+    let mut members: u32 = 0;
+    for point in data.iter() {
+        if point < &100 {
+            members += 1;
+        }
+    }
+    return members;
 }
