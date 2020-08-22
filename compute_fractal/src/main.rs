@@ -11,7 +11,7 @@ fn main() {
 }
 
 fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iterations: u32) -> Vec<Vec<u32>> {
-    println!("Computing fractal with width {} and height {}", width, height);
+    println!("Computing fractal using width {} and height {}", width, height);
     
     //Store the result in 2-dimensional vector
     let mut results_array = vec![vec![0; width]; height];
@@ -27,19 +27,13 @@ fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iteratio
 
     println!("Using pixel width {} and pixel height {}", pixel_width, pixel_height);
 
-    //Calculate the result for each pixel
-    let mut x: f32;
-    let mut y: f32;
-    let mut x_squared: f32;
-    let mut y_squared: f32;
-    let mut iterations: u32;
-
-    //iterate
+    //Formula values
+    let (mut x, mut y, mut x_squared, mut y_squared, mut iterations): (f32, f32, f32, f32, u32);
+    let (mut array_row, mut array_col): (usize, usize) = (0, 0);
     let mut pixel_x = X_MIN as f32;
     let mut pixel_y = Y_MIN as f32;
-    let mut array_row: usize = 0;
-    let mut array_col: usize = 0;
 
+    //Calculate the result for each pixel
     while pixel_x < X_MAX {
         while pixel_y < Y_MAX {
             x = pixel_x;
@@ -58,9 +52,10 @@ fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iteratio
             //Convert the number of iterations to a color value, then store it
             //Need a const to multiply the iteration num by to map it between white and black
             //..convert..
+            println!("({},{}) = ({},{}) = {}", array_row, array_col, pixel_x, pixel_y, iterations);
             results_array[array_row][array_col] = iterations;
 
-            println!("({},{}) = {}", pixel_x, pixel_y, iterations);
+            //println!("({},{}) = {}", pixel_x, pixel_y, iterations);
             pixel_y += pixel_height;
             array_col += 1;
         }
