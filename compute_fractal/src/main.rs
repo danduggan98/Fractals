@@ -29,13 +29,13 @@ fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iteratio
 
     //Formula values
     let (mut x, mut y, mut x_squared, mut y_squared, mut iterations): (f32, f32, f32, f32, u32);
-    let (mut array_row, mut array_col): (usize, usize) = (0, 0);
+    let (mut array_col, mut array_row): (usize, usize) = (0, 0);
     let mut pixel_x = X_MIN as f32;
     let mut pixel_y = Y_MIN as f32;
 
     //Calculate the result for each pixel
-    while pixel_x < X_MAX {
-        while pixel_y < Y_MAX {
+    while array_col < width {
+        while array_row < height {
             x = pixel_x;
             y = pixel_y;
             x_squared = 0.0;
@@ -49,20 +49,21 @@ fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iteratio
                 y_squared = y * y;
                 iterations += 1;
             }
+
             //Convert the number of iterations to a color value, then store it
             //Need a const to multiply the iteration num by to map it between white and black
             //..convert..
-            println!("({},{}) = ({},{}) = {}", array_row, array_col, pixel_x, pixel_y, iterations);
+            println!("({},{}) = ({},{}) = {}", array_col, array_row, pixel_x, pixel_y, iterations);
             results_array[array_row][array_col] = iterations;
 
             //println!("({},{}) = {}", pixel_x, pixel_y, iterations);
             pixel_y += pixel_height;
-            array_col += 1;
+            array_row += 1;
         }
         pixel_y = Y_MIN;
+        array_row = 0;
         pixel_x += pixel_width;
-        array_row += 1;
-        array_col = 0;
+        array_col += 1;
     }
     return results_array;
 }
