@@ -1,6 +1,0 @@
-{
-  "name": "fractal_utils",
-  "version": "1.0.0",
-  "description": "Helper functions for Fractals.io",
-  "main": "server.js"
-}
