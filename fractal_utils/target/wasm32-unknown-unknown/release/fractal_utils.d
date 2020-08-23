@@ -1,0 +1,1 @@
+/home/dan/Documents/Programming_Projects/Fractals/fractal_utils/target/wasm32-unknown-unknown/release/fractal_utils.wasm: /home/dan/Documents/Programming_Projects/Fractals/fractal_utils/src/lib.rs build.rs
