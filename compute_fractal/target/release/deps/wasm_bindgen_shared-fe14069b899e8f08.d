@@ -1,0 +1,7 @@
+/home/dan/Documents/Programming_Projects/Fractals/compute_fractal/target/release/deps/wasm_bindgen_shared-fe14069b899e8f08.rmeta: /home/dan/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-shared-0.2.67/src/lib.rs
+
+/home/dan/Documents/Programming_Projects/Fractals/compute_fractal/target/release/deps/libwasm_bindgen_shared-fe14069b899e8f08.rlib: /home/dan/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-shared-0.2.67/src/lib.rs
+
+/home/dan/Documents/Programming_Projects/Fractals/compute_fractal/target/release/deps/wasm_bindgen_shared-fe14069b899e8f08.d: /home/dan/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-shared-0.2.67/src/lib.rs
+
+/home/dan/.cargo/registry/src/github.com-1ecc6299db9ec823/wasm-bindgen-shared-0.2.67/src/lib.rs:

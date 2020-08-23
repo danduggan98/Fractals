@@ -13,7 +13,7 @@ use wasm_bindgen::prelude::*;
 }*/
 
 #[wasm_bindgen]
-pub fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iterations: usize) -> Vec<Vec<usize>> {
+pub fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iterations: usize) -> /*Vec<Vec<usize>>*/Vec<u32> {
     println!("Computing fractal using width {} and height {}", width, height);
     
     //Store the result in 2-dimensional vector
@@ -68,11 +68,12 @@ pub fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iter
         pixel_x += pixel_width;
         array_col += 1;
     }
-    return results_array;
+    //return results_array;
+    return vec![1,2,3];
 }
 
 //Helper function to check if the calculation is working
-fn check_fractal(data: Vec<Vec<u32>>, max: u32) -> u32 {
+/*fn check_fractal(data: Vec<Vec<u32>>, max: u32) -> u32 {
     let mut members: u32 = 0;
 
     //Count the number of points that fall within the set
@@ -84,4 +85,4 @@ fn check_fractal(data: Vec<Vec<u32>>, max: u32) -> u32 {
         }
     }
     return members;
-}
+}*/
