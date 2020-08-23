@@ -1,16 +1,19 @@
+use wasm_bindgen::prelude::*;
+
 // Performance improvements
-// - Use ndarrays instead of vectors for faster traversal
+// - Use ndarrays instead of vectors for faster traversal (or a single vector)
 // - Try smaller data types for certain values
 // - Add benchmarking using the time crate
 
-fn main() {
+/*fn main() {
     const MAX_ITERATIONS: u32 = 100;
-    let result = compute_fractal(20, 15, 0.0, 0.0, MAX_ITERATIONS); //Test value
+    let result = compute_fractal(200, 150, 0.0, 0.0, MAX_ITERATIONS); //Test value
 
     println!("There were {} points on the mandelbrot", check_fractal(result, MAX_ITERATIONS));
-}
+}*/
 
-fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iterations: u32) -> Vec<Vec<u32>> {
+#[wasm_bindgen]
+pub fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iterations: usize) -> Vec<Vec<usize>> {
     println!("Computing fractal using width {} and height {}", width, height);
     
     //Store the result in 2-dimensional vector
@@ -28,7 +31,7 @@ fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iteratio
     println!("Using pixel width {} and pixel height {}", pixel_width, pixel_height);
 
     //Formula values
-    let (mut x, mut y, mut x_squared, mut y_squared, mut iterations): (f32, f32, f32, f32, u32);
+    let (mut x, mut y, mut x_squared, mut y_squared, mut iterations): (f32, f32, f32, f32, usize);
     let (mut array_col, mut array_row): (usize, usize) = (0, 0);
     let mut pixel_x = X_MIN as f32;
     let mut pixel_y = Y_MIN as f32;
@@ -53,7 +56,7 @@ fn compute_fractal(width: usize, height: usize, x_0: f32, y_0: f32, max_iteratio
             //Convert the number of iterations to a color value, then store it
             //Need a const to multiply the iteration num by to map it between white and black
             //..convert..
-            println!("({},{}) = ({},{}) = {}", array_col, array_row, pixel_x, pixel_y, iterations);
+            //println!("({},{}) = ({},{}) = {}", array_col, array_row, pixel_x, pixel_y, iterations);
             results_array[array_row][array_col] = iterations;
 
             //println!("({},{}) = {}", pixel_x, pixel_y, iterations);
