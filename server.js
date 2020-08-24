@@ -1,10 +1,10 @@
 //Load fractal methods from WASM
-const source = require('fs').readFileSync('./fractal_utils/pkg/fractal_utils_bg.wasm');
+const wasm_source = require('fs').readFileSync('./fractal_utils/pkg/fractal_utils_bg.wasm');
 let fractal_utils;
 let MANDELBROT;
 
 (async function loadWASM() {
-    fractal_utils = await WebAssembly.instantiate(new Uint8Array(source));
+    fractal_utils = await WebAssembly.instantiate(new Uint8Array(wasm_source));
     MANDELBROT = fractal_utils.instance.exports.mandelbrot();
     console.log('- Fractal utilities loaded from WASM');
 })();
@@ -15,6 +15,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.get('/mandelbrot', (req, res) => { //Add parameters
+    console.log(MANDELBROT);
     res.status(200).send('NICE');
 });
 
