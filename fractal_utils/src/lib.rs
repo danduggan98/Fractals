@@ -44,10 +44,8 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
             //Convert the number of iterations to a color value, then store it
             //Need a const to multiply the iteration num by to map it between white and black
             //..convert..
-            //println!("({},{}) = ({},{}) = {}", array_col, array_row, pixel_x, pixel_y, iterations);
-            //println!("({},{}) = {}", pixel_x, pixel_y, iterations);
-
-            results_array[((array_x * width + array_y) * 4) as usize] = iterations;
+            //println!("({},{}) = ({},{}) = {}", array_x, array_y, pixel_x, pixel_y, iterations);
+            results_array[(array_x * height + array_y) as usize] = iterations;
             pixel_y += pixel_height;
         }
         pixel_y = Y_MIN;
