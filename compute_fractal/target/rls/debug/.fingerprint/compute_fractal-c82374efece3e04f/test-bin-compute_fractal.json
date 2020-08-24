@@ -1,1 +1,0 @@
-{"rustc":15479600521011547909,"features":"[]","target":9301751168265005551,"profile":5813434296824078385,"path":1036222786711178230,"deps":[[12008257248018057551,"wasm_bindgen",false,9436929334028753322]],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/compute_fractal-c82374efece3e04f/dep-test-bin-compute_fractal"}}],"rustflags":[],"metadata":5119536946754423029}
