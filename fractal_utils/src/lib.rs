@@ -1,7 +1,7 @@
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u32) -> Vec<u32> {
+pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u8) -> Vec<u8> {
     println!("Computing fractal using width {} and height {}", width, height);
     
     //Store the result in 2-dimensional vector
@@ -20,7 +20,7 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
     println!("Using pixel width {} and pixel height {}", pixel_width, pixel_height);
 
     //Formula values
-    let (mut x, mut y, mut x_squared, mut y_squared, mut iterations): (f32, f32, f32, f32, u32);
+    let (mut x, mut y, mut x_squared, mut y_squared, mut iterations): (f32, f32, f32, f32, u8);
     let mut pixel_x = X_MIN as f32;
     let mut pixel_y = Y_MIN as f32;
 
