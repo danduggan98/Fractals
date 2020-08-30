@@ -3,12 +3,13 @@
 import * as wasm from './pkg';
 
 (function loadMandelbrot() {
+    console.time('Mandelbrot loaded in');
     const fractalCanvas = document.getElementById('fractalCanvas');
     const width = fractalCanvas.width;
     const height = fractalCanvas.height;
 
     //Create an image from our mandelbrot results
-    const pixels = wasm.mandelbrot(width, height, 0.0, 0.0, 100);
+    const pixels = wasm.mandelbrot(width, height, -1.0, 0.0, 16);
     const fractalArray = new Uint8ClampedArray(pixels);
     const fractalImage = new ImageData(fractalArray, width, height);
 
@@ -19,4 +20,5 @@ import * as wasm from './pkg';
     console.log('Initial image data:', fractalImage.data);
     console.log('Initial data:', pixels);
     console.log('Final image data:', ctx.getImageData(0,0,width,height));
+    console.timeEnd('Mandelbrot loaded in');
 })();
