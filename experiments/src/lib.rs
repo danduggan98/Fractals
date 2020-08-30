@@ -47,10 +47,10 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
             pixel_idx = 4 * (array_x * height + array_y) as usize;
 
             //Just for initial tests - change later
-            results_array[pixel_idx] = 255;
+            results_array[pixel_idx] = 0;
             results_array[pixel_idx + 1] = 0;
-            results_array[pixel_idx + 2] = 0;
-            results_array[pixel_idx + 3] = 1;
+            results_array[pixel_idx + 2] = iterations * 2;
+            results_array[pixel_idx + 3] = 255;
 
             pixel_y += pixel_height;
         }
