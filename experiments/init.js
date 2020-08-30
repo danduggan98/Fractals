@@ -8,7 +8,7 @@ import * as wasm from './pkg';
     const height = fractalCanvas.height;
 
     //Create an image from our mandelbrot results
-    const pixels = wasm.mandelbrot(width, height, -2.0, 0.0, 25);
+    const pixels = wasm.mandelbrot(width, height, 0.0, 0.0, 100);
     const fractalArray = new Uint8ClampedArray(pixels);
     const fractalImage = new ImageData(fractalArray, width, height);
 
