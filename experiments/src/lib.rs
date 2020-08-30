@@ -8,11 +8,20 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
     let size: usize = (width * height * 4) as usize; //4x to use RGBA values
     let mut results_array = vec![0; size];
 
+    //Constants to manipulate the color scheme
+    let r_value: f32 = 0.0; //0 = none, 1 = max of this color
+    let g_value: f32 = 0.65;
+    let b_value: f32 = 1.0; 
+
+    let r_adjust: u8 = (((255 / max_iterations) as f32) * r_value) as u8;
+    let g_adjust: u8 = (((255 / max_iterations) as f32) * g_value) as u8;
+    let b_adjust: u8 = (((255 / max_iterations) as f32) * b_value) as u8;
+
     //Convert the pixels into real coordinates in the Mandelbrot's range
     const X_MIN: f32 = -2.0;
     const X_MAX: f32 = 1.0;
-    const Y_MIN: f32 = -1.0;
-    const Y_MAX: f32 = 1.0;
+    const Y_MIN: f32 = -1.5;
+    const Y_MAX: f32 = 1.5;
 
     let pixel_width = (X_MAX - X_MIN) / (width as f32);
     let pixel_height = (Y_MAX - Y_MIN) / (height as f32);
@@ -47,9 +56,9 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
             pixel_idx = 4 * (array_x + width * array_y) as usize;
 
             //Just for initial tests - change later
-            results_array[pixel_idx] = 0;
-            results_array[pixel_idx + 1] = 0;
-            results_array[pixel_idx + 2] = iterations * 5;
+            results_array[pixel_idx]     = iterations * r_adjust;
+            results_array[pixel_idx + 1] = iterations * g_adjust;
+            results_array[pixel_idx + 2] = iterations * b_adjust;
             results_array[pixel_idx + 3] = 255;
 
             pixel_y += pixel_height;
