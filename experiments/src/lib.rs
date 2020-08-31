@@ -1,7 +1,9 @@
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u8) -> Vec<u8> {
+pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f32,
+    max_iterations: u8, r_value: f32, g_value: f32, b_value: f32) -> Vec<u8> {
+
     println!("Computing fractal using width {} and height {}", width, height);
     
     //Store the result in 2-dimensional vector
@@ -9,23 +11,13 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
     let mut results_array = vec![0; size];
 
     //Constants to manipulate the color scheme
-    let r_value: f32 = 0.0; //0 = none, 1 = max of this color
-    let g_value: f32 = 0.65;
-    let b_value: f32 = 1.0; 
-
     let r_adjust: u8 = (((255 / max_iterations) as f32) * r_value) as u8;
     let g_adjust: u8 = (((255 / max_iterations) as f32) * g_value) as u8;
     let b_adjust: u8 = (((255 / max_iterations) as f32) * b_value) as u8;
 
     //Convert the pixels into real coordinates in the Mandelbrot's range
-    const X_MIN: f32 = -2.0;
-    const X_MAX: f32 = 1.0;
-    const Y_MIN: f32 = -1.5;
-    const Y_MAX: f32 = 1.5;
-
-    let pixel_width = (X_MAX - X_MIN) / (width as f32);
-    let pixel_height = (Y_MAX - Y_MIN) / (height as f32);
-
+    let pixel_width  = (x_1 - x_0) / (width as f32);
+    let pixel_height = (y_1 - y_0) / (height as f32);
     println!("Using pixel width {} and pixel height {}", pixel_width, pixel_height);
 
     //Formula values
@@ -51,11 +43,9 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
                 iterations += 1;
             }
 
-            //Convert the number of iterations to a color value in the form RGBA
-            //THIS IS WHERE WE CAN ADD CUSTOM COLOR SCHEMES
+            //Store the number of iterations as an RGBA color value
             pixel_idx = 4 * (array_x + width * array_y) as usize;
 
-            //Just for initial tests - change later
             results_array[pixel_idx]     = iterations * r_adjust;
             results_array[pixel_idx + 1] = iterations * g_adjust;
             results_array[pixel_idx + 2] = iterations * b_adjust;
@@ -63,7 +53,7 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
 
             pixel_y += pixel_height;
         }
-        pixel_y = Y_MIN;
+        pixel_y = y_0;
         pixel_x += pixel_width;
     }
     return results_array;
