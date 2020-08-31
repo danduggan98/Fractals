@@ -46,9 +46,16 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
             //Store the number of iterations as an RGBA color value
             pixel_idx = 4 * (array_x + width * array_y) as usize;
 
-            results_array[pixel_idx]     = iterations * r_adjust;
-            results_array[pixel_idx + 1] = iterations * g_adjust;
-            results_array[pixel_idx + 2] = iterations * b_adjust;
+            if iterations < max_iterations {
+                results_array[pixel_idx]     = iterations * r_adjust;
+                results_array[pixel_idx + 1] = iterations * g_adjust;
+                results_array[pixel_idx + 2] = iterations * b_adjust;
+            }
+            else {
+                results_array[pixel_idx]     = 0;
+                results_array[pixel_idx + 1] = 0;
+                results_array[pixel_idx + 2] = 0;
+            }
             results_array[pixel_idx + 3] = 255;
 
             pixel_y += pixel_height;
