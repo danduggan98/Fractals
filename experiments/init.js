@@ -3,9 +3,9 @@
 import * as wasm from './pkg';
 
 const X_MIN = -2.0;
-const X_MAX = 1.0;
-const Y_MIN = -1.5;
-const Y_MAX = 1.5;
+const X_MAX = 0.5;
+const Y_MIN = -1.2;
+const Y_MAX = 1.2;
 
 (function loadMandelbrot() {
     console.time('Mandelbrot loaded in');
