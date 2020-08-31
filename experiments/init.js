@@ -14,16 +14,13 @@ const Y_MAX = 1.5;
     const height = fractalCanvas.height;
 
     //Create an image from our mandelbrot results
-    const pixels = wasm.mandelbrot(width, height, X_MIN, X_MAX, Y_MIN, Y_MAX, 60, 0.0, 0.8, 1.0);
+    //const pixels = wasm.mandelbrot(width, height, -1.0, -0.5, 0.0, 0.5, 60, 0.0, 0.8, 1.0);
+    const pixels = wasm.mandelbrot(width, height, X_MIN, X_MAX, Y_MIN, Y_MAX, 60, 1.0, 0.0, 0.2);
     const fractalArray = new Uint8ClampedArray(pixels);
     const fractalImage = new ImageData(fractalArray, width, height);
 
     //Store the image in our canvas
     const ctx = fractalCanvas.getContext('2d');
     ctx.putImageData(fractalImage, 0, 0);
-
-    console.log('Initial image data:', fractalImage.data);
-    console.log('Initial data:', pixels);
-    console.log('Final image data:', ctx.getImageData(0,0,width,height));
     console.timeEnd('Mandelbrot loaded in');
 })();
