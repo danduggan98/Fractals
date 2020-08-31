@@ -1,6 +1,11 @@
-//DATA IS THERE, BUT ITS NOT VISIBLE???
+//Script to call the mandelbrot function on page load
 
 import * as wasm from './pkg';
+
+const X_MIN = -2.0;
+const X_MAX = 1.0;
+const Y_MIN = -1.5;
+const Y_MAX = 1.5;
 
 (function loadMandelbrot() {
     console.time('Mandelbrot loaded in');
@@ -9,7 +14,7 @@ import * as wasm from './pkg';
     const height = fractalCanvas.height;
 
     //Create an image from our mandelbrot results
-    const pixels = wasm.mandelbrot(width, height, -2.0, 0.0, 50);
+    const pixels = wasm.mandelbrot(width, height, X_MIN, X_MAX, Y_MIN, Y_MAX, 60, 0.0, 0.8, 1.0);
     const fractalArray = new Uint8ClampedArray(pixels);
     const fractalImage = new ImageData(fractalArray, width, height);
 
