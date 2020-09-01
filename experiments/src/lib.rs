@@ -1,19 +1,29 @@
 use wasm_bindgen::prelude::*;
 
+pub struct Color {
+    r: f32, 
+    g: f32,
+    b: f32
+}
+
 #[wasm_bindgen]
 pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f32,
     max_iterations: u8, r_value: f32, g_value: f32, b_value: f32) -> Vec<u8> {
 
     println!("Computing fractal using width {} and height {}", width, height);
+
+    //Determine the color palette
+    let mut color_palette: Vec<Color> = Vec::new();
+
+    color_palette.push(Color{ r: 0.0, g: 0.0, b: 1.0 });
+    color_palette.push(Color{ r: 1.0, g: 0.0, b: 0.0 });
+    color_palette.push(Color{ r: 0.0, g: 1.0, b: 0.0 });
+
+    let palette_bucket_width = ((max_iterations as usize + (color_palette.len() - 1 as usize)) as usize) / color_palette.len();
     
     //Store the result in 2-dimensional vector
     let size: usize = (width * height * 4) as usize; //4x to use RGBA values
     let mut results_array = vec![0; size];
-
-    //Constants to manipulate the color scheme
-    let r_adjust: u8 = (((255 / max_iterations) as f32) * r_value) as u8;
-    let g_adjust: u8 = (((255 / max_iterations) as f32) * g_value) as u8;
-    let b_adjust: u8 = (((255 / max_iterations) as f32) * b_value) as u8;
 
     //Convert the pixels into real coordinates in the Mandelbrot's range
     let pixel_width  = (x_1 - x_0) / (width as f32);
@@ -47,9 +57,13 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
             pixel_idx = 4 * (array_x + width * array_y) as usize;
 
             if iterations < max_iterations {
-                results_array[pixel_idx]     = iterations * r_adjust;
-                results_array[pixel_idx + 1] = iterations * g_adjust;
-                results_array[pixel_idx + 2] = iterations * b_adjust;
+                let palette_idx = (iterations as usize) / palette_bucket_width;
+                //println!("iterations = {}, palette_idx = {}", iterations, palette_idx);
+                let next_color = &color_palette[palette_idx];
+
+                results_array[pixel_idx]     = 255 * (next_color.r as u8);
+                results_array[pixel_idx + 1] = 255 * (next_color.g as u8);
+                results_array[pixel_idx + 2] = 255 * (next_color.b as u8);
             }
             else {
                 results_array[pixel_idx]     = 0;
@@ -57,7 +71,6 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
                 results_array[pixel_idx + 2] = 0;
             }
             results_array[pixel_idx + 3] = 255;
-
             pixel_y += pixel_height;
         }
         pixel_y = y_0;
