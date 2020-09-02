@@ -14,7 +14,9 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
     let mut color_list: Vec<Color> = Vec::new();
     color_list.push(Color { r: 0, g: 0, b: 0 }); //Full black
     color_list.push(Color { r: 0, g: 0, b: 255 }); //Full blue
-    color_list.push(Color { r: 255, g: 255, b: 0 }); //Yellow
+    color_list.push(Color { r: 255, g: 255, b: 240 }); //Full white
+    color_list.push(Color { r: 255, g: 255, b: 240 }); //Full white
+    color_list.push(Color { r: 255, g: 127, b: 0 }); //Yellow
     color_list.push(Color { r: 255, g: 255, b: 255 }); //Full white
 
     let num_colors = color_list.len();
