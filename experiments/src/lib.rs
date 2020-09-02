@@ -1,25 +1,37 @@
 use wasm_bindgen::prelude::*;
 
 pub struct Color {
-    r: f32, 
-    g: f32,
-    b: f32
+    r: u8,
+    g: u8,
+    b: u8
 }
 
 #[wasm_bindgen]
-pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f32,
-    max_iterations: u8, r_value: f32, g_value: f32, b_value: f32) -> Vec<u8> {
-
+pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f32, max_iterations: u8) -> Vec<u8> {
     println!("Computing fractal using width {} and height {}", width, height);
 
-    //Determine the color palette
+    //Create the color palette based on two colors
+    let primary_color   = Color { r: 0, g: 0, b: 255 }; //Pure blue
+    let secondary_color = Color { r: 255, g: 255, b: 255 }; //Pure white
+
+    let delta_r = (secondary_color.r as i32 - primary_color.r as i32) / (max_iterations as i32);
+    let delta_g = (secondary_color.g as i32 - primary_color.g as i32) / (max_iterations as i32);
+    let delta_b = (secondary_color.b as i32 - primary_color.b as i32) / (max_iterations as i32);
+
+    println!("(dr={}, dg={}, db={})", delta_r, delta_g, delta_b);
+
     let mut color_palette: Vec<Color> = Vec::new();
+    let mut r_val = primary_color.r as i32;
+    let mut g_val = primary_color.g as i32;
+    let mut b_val = primary_color.b as i32;
 
-    color_palette.push(Color{ r: 0.0, g: 0.0, b: 1.0 });
-    color_palette.push(Color{ r: 1.0, g: 0.0, b: 0.0 });
-    color_palette.push(Color{ r: 0.0, g: 1.0, b: 0.0 });
-
-    let palette_bucket_width = ((max_iterations as usize + (color_palette.len() - 1 as usize)) as usize) / color_palette.len();
+    for _idx in 0..max_iterations {
+        r_val += delta_r;
+        g_val += delta_g;
+        b_val += delta_b;
+        color_palette.push(Color{ r: r_val as u8, g: g_val as u8, b: b_val as u8 });
+        println!("({},{},{})", r_val, g_val, b_val);
+    }
     
     //Store the result in 2-dimensional vector
     let size: usize = (width * height * 4) as usize; //4x to use RGBA values
@@ -57,13 +69,10 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
             pixel_idx = 4 * (array_x + width * array_y) as usize;
 
             if iterations < max_iterations {
-                let palette_idx = (iterations as usize) / palette_bucket_width;
-                //println!("iterations = {}, palette_idx = {}", iterations, palette_idx);
-                let next_color = &color_palette[palette_idx];
-
-                results_array[pixel_idx]     = 255 * (next_color.r as u8);
-                results_array[pixel_idx + 1] = 255 * (next_color.g as u8);
-                results_array[pixel_idx + 2] = 255 * (next_color.b as u8);
+                let next_color = &color_palette[iterations as usize];
+                results_array[pixel_idx]     = next_color.r as u8;
+                results_array[pixel_idx + 1] = next_color.g as u8;
+                results_array[pixel_idx + 2] = next_color.b as u8;
             }
             else {
                 results_array[pixel_idx]     = 0;
