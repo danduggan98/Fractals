@@ -11,8 +11,8 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
     println!("Computing fractal using width {} and height {}", width, height);
 
     //Create the color palette based on two colors
-    let primary_color   = Color { r: 0, g: 0, b: 255 }; //Pure blue
-    let secondary_color = Color { r: 255, g: 255, b: 255 }; //Pure white
+    let primary_color   = Color { r: 0, g: 10, b: 0 }; //Pure blue
+    let secondary_color = Color { r: 255, g: 0, b: 0 }; //Pure white
 
     let delta_r = (secondary_color.r as i32 - primary_color.r as i32) / (max_iterations as i32);
     let delta_g = (secondary_color.g as i32 - primary_color.g as i32) / (max_iterations as i32);
@@ -47,6 +47,7 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
     let mut pixel_x = x_0;
     let mut pixel_y = y_0;
     let mut pixel_idx: usize; //Keeps track of our location in the array
+    let mut pixel_color: &Color;
 
     //Calculate the result for each pixel
     for array_x in 0..width {
@@ -69,10 +70,10 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
             pixel_idx = 4 * (array_x + width * array_y) as usize;
 
             if iterations < max_iterations {
-                let next_color = &color_palette[iterations as usize];
-                results_array[pixel_idx]     = next_color.r as u8;
-                results_array[pixel_idx + 1] = next_color.g as u8;
-                results_array[pixel_idx + 2] = next_color.b as u8;
+                pixel_color = &color_palette[iterations as usize];
+                results_array[pixel_idx]     = pixel_color.r as u8;
+                results_array[pixel_idx + 1] = pixel_color.g as u8;
+                results_array[pixel_idx + 2] = pixel_color.b as u8;
             }
             else {
                 results_array[pixel_idx]     = 0;
