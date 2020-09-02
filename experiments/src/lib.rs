@@ -10,27 +10,44 @@ pub struct Color {
 pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f32, max_iterations: u8) -> Vec<u8> {
     println!("Computing fractal using width {} and height {}", width, height);
 
-    //Create the color palette based on two colors
-    let primary_color   = Color { r: 0, g: 10, b: 0 }; //Pure blue
-    let secondary_color = Color { r: 255, g: 0, b: 0 }; //Pure white
+    //Create the color palette based on a list of colors
+    let mut color_list: Vec<Color> = Vec::new();
+    color_list.push(Color { r: 0, g: 0, b: 0 }); //Full black
+    color_list.push(Color { r: 0, g: 0, b: 255 }); //Full blue
+    color_list.push(Color { r: 255, g: 255, b: 255 }); //Full white
 
-    let delta_r = (secondary_color.r as i32 - primary_color.r as i32) / (max_iterations as i32);
-    let delta_g = (secondary_color.g as i32 - primary_color.g as i32) / (max_iterations as i32);
-    let delta_b = (secondary_color.b as i32 - primary_color.b as i32) / (max_iterations as i32);
-
-    println!("(dr={}, dg={}, db={})", delta_r, delta_g, delta_b);
-
+    let num_colors = color_list.len();
     let mut color_palette: Vec<Color> = Vec::new();
-    let mut r_val = primary_color.r as i32;
-    let mut g_val = primary_color.g as i32;
-    let mut b_val = primary_color.b as i32;
+    let section_width = max_iterations / (num_colors - 1) as u8;
 
-    for _idx in 0..max_iterations {
-        r_val += delta_r;
-        g_val += delta_g;
-        b_val += delta_b;
-        color_palette.push(Color{ r: r_val as u8, g: g_val as u8, b: b_val as u8 });
-        println!("({},{},{})", r_val, g_val, b_val);
+    println!("max_iterations: {}", max_iterations);
+    println!("section_width: {}", section_width);
+    println!("num_colors: {}", num_colors);
+    println!();
+
+    for _color_idx in 0..(num_colors - 1) { //Loop through all colors to make gradients between each
+        let start_color = &color_list[_color_idx];
+        let end_color   = &color_list[_color_idx + 1];
+
+        let delta_r = (end_color.r as i32 - start_color.r as i32) / section_width as i32;
+        let delta_g = (end_color.g as i32 - start_color.g as i32) / section_width as i32;
+        let delta_b = (end_color.b as i32 - start_color.b as i32) / section_width as i32;
+
+        println!("(dr={}, dg={}, db={})", delta_r, delta_g, delta_b);
+        println!("_color_idx: {}", _color_idx);
+        
+        let mut r_val = start_color.r as i32;
+        let mut g_val = start_color.g as i32;
+        let mut b_val = start_color.b as i32;
+
+        for _palette_idx in 0..section_width {
+            r_val += delta_r;
+            g_val += delta_g;
+            b_val += delta_b;
+            color_palette.push(Color{ r: r_val as u8, g: g_val as u8, b: b_val as u8 });
+            println!("({},{},{})", r_val, g_val, b_val);
+        }
+        println!("palette len: {}", color_palette.len());
     }
     
     //Store the result in 2-dimensional vector
