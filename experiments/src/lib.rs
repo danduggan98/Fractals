@@ -14,6 +14,7 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
     let mut color_list: Vec<Color> = Vec::new();
     color_list.push(Color { r: 0, g: 0, b: 0 }); //Full black
     color_list.push(Color { r: 0, g: 0, b: 255 }); //Full blue
+    color_list.push(Color { r: 255, g: 255, b: 0 }); //Yellow
     color_list.push(Color { r: 255, g: 255, b: 255 }); //Full white
 
     let num_colors = color_list.len();
@@ -44,10 +45,18 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
             r_val += delta_r;
             g_val += delta_g;
             b_val += delta_b;
-            color_palette.push(Color{ r: r_val as u8, g: g_val as u8, b: b_val as u8 });
+            color_palette.push(Color { r: r_val as u8, g: g_val as u8, b: b_val as u8 });
             println!("({},{},{})", r_val, g_val, b_val);
         }
         println!("palette len: {}", color_palette.len());
+    }
+
+    //Rounding sometimes leaves a few indexes unfilled at the end - use the last color to fill in the gaps
+    let last_color_idx = color_list.len() - 1;
+    let last_color = &color_list[last_color_idx];
+
+    while color_palette.len() < max_iterations as usize {
+        color_palette.push(Color { r: last_color.r, g: last_color.g, b: last_color.b });
     }
     
     //Store the result in 2-dimensional vector
