@@ -5,7 +5,7 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
     println!("Computing fractal using width {} and height {}", width, height);
     
     //Store the result in 2-dimensional vector
-    let size: usize = (width * height) as usize;
+    let size: usize = (width * height * 4) as usize; //4x to use RGBA values
     let mut results_array = vec![0; size];
 
     //Convert the pixels into real coordinates in the Mandelbrot's range
@@ -23,6 +23,7 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
     let (mut x, mut y, mut x_squared, mut y_squared, mut iterations): (f32, f32, f32, f32, u8);
     let mut pixel_x = X_MIN as f32;
     let mut pixel_y = Y_MIN as f32;
+    let mut pixel_idx: usize; //Keeps track of our location in the array
 
     //Calculate the result for each pixel
     for array_x in 0..width {
@@ -41,11 +42,16 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, y_0: f32, max_iterations: u
                 iterations += 1;
             }
 
-            //Convert the number of iterations to a color value, then store it
-            //Need a const to multiply the iteration num by to map it between white and black
-            //..convert..
-            //println!("({},{}) = ({},{}) = {}", array_x, array_y, pixel_x, pixel_y, iterations);
-            results_array[(array_x * height + array_y) as usize] = iterations;
+            //Convert the number of iterations to a color value in the form RGBA
+            //THIS IS WHERE WE CAN ADD CUSTOM COLOR SCHEMES
+            pixel_idx = (4 * array_x * height + array_y) as usize;
+
+            //Just for initial tests - change later
+            results_array[pixel_idx] = 255;
+            results_array[pixel_idx + 1] = 0;
+            results_array[pixel_idx + 2] = 0;
+            results_array[pixel_idx + 3] = 1;
+
             pixel_y += pixel_height;
         }
         pixel_y = Y_MIN;
