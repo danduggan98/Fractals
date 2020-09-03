@@ -155,7 +155,7 @@
 /******/ 				promises.push(installedWasmModuleData);
 /******/ 			else {
 /******/ 				var importObject = wasmImportObjects[wasmModuleId]();
-/******/ 				var req = fetch(__webpack_require__.p + "" + {"./pkg/experiments_bg.wasm":"a43503d5f825d4c5db48"}[wasmModuleId] + ".module.wasm");
+/******/ 				var req = fetch(__webpack_require__.p + "" + {"./pkg/experiments_bg.wasm":"4703f25e133904a45aa7"}[wasmModuleId] + ".module.wasm");
 /******/ 				var promise;
 /******/ 				if(importObject instanceof Promise && typeof WebAssembly.compileStreaming === 'function') {
 /******/ 					promise = Promise.all([WebAssembly.compileStreaming(req), importObject]).then(function(items) {
@@ -256,7 +256,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./init.js */ \"./init.js\"));\nconsole.log('whaddup');\n\n//# sourceURL=webpack:///./index.js?");
+eval("__webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./init.js */ \"./init.js\"));\n\n\n//# sourceURL=webpack:///./index.js?");
 
 /***/ })
 
