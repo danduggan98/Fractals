@@ -10,6 +10,8 @@ pub struct Color {
 pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f32, max_iterations: u8) -> Vec<u8> {
     println!("Computing fractal using width {} and height {}", width, height);
 
+    //////// COLOR SCHEME ////////
+    
     //Create the color palette based on a list of colors
     let mut color_list: Vec<Color> = Vec::new();
     color_list.push(Color { r: 0, g: 0, b: 0 });       //Full black
@@ -52,6 +54,8 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
     while color_palette.len() < max_iterations as usize {
         color_palette.push(Color { r: last_color.r, g: last_color.g, b: last_color.b });
     }
+
+    //////// GENERATING THE SET ////////
     
     //Store the result in 2-dimensional vector
     let size: usize = (width * height * 4) as usize; //4x to use RGBA values
