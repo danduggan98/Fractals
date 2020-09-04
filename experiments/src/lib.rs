@@ -25,11 +25,6 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
     let mut color_palette: Vec<Color> = Vec::new();
     let section_width = max_iterations / (num_colors - 1) as u8;
 
-    println!("max_iterations: {}", max_iterations);
-    println!("section_width: {}", section_width);
-    println!("num_colors: {}", num_colors);
-    println!();
-
     for _color_idx in 0..(num_colors - 1) { //Loop through all colors to make gradients between each
         let start_color = &color_list[_color_idx];
         let end_color   = &color_list[_color_idx + 1];
@@ -38,9 +33,6 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
         let delta_g = (end_color.g as i32 - start_color.g as i32) / section_width as i32;
         let delta_b = (end_color.b as i32 - start_color.b as i32) / section_width as i32;
 
-        println!("(dr={}, dg={}, db={})", delta_r, delta_g, delta_b);
-        println!("_color_idx: {}", _color_idx);
-        
         let mut r_val = start_color.r as i32;
         let mut g_val = start_color.g as i32;
         let mut b_val = start_color.b as i32;
@@ -50,9 +42,7 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
             g_val += delta_g;
             b_val += delta_b;
             color_palette.push(Color { r: r_val as u8, g: g_val as u8, b: b_val as u8 });
-            println!("({},{},{})", r_val, g_val, b_val);
         }
-        println!("palette len: {}", color_palette.len());
     }
 
     //Rounding sometimes leaves a few indexes unfilled at the end - use the last color to fill in the gaps
