@@ -15,8 +15,8 @@ const max_iterations = 128;
     const height = fractalCanvas.height;
 
     //Create an image from our mandelbrot results
-    const pixels = wasm.mandelbrot(width, height, -1.0, -0.5, 0.0, 0.5, max_iterations);
-    //const pixels = wasm.mandelbrot(width, height, X_MIN, X_MAX, Y_MIN, Y_MAX, max_iterations);
+    //const pixels = wasm.mandelbrot(width, height, -1.0, -0.5, 0.0, 0.5, max_iterations);
+    const pixels = wasm.mandelbrot(width, height, X_MIN, X_MAX, Y_MIN, Y_MAX, max_iterations);
     const fractalArray = new Uint8ClampedArray(pixels);
     const fractalImage = new ImageData(fractalArray, width, height);
 
