@@ -70,12 +70,12 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
     let (mut x, mut y, mut x_squared, mut y_squared, mut iterations): (f32, f32, f32, f32, u8);
     let mut pixel_x = x_0;
     let mut pixel_y = y_0;
-    let mut pixel_idx: usize; //Keeps track of our location in the array
+    let mut pixel_idx: usize = 0; //Keeps track of our location in the array
     let mut pixel_color: &Color;
 
     //Calculate the result for each pixel
-    for array_x in 0..width {
-        for array_y in 0..height {
+    for _array_y in 0..height {
+        for _array_x in 0..width {
             x = 0.0;
             y = 0.0;
             x_squared = 0.0;
@@ -91,24 +91,22 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
             }
 
             //Store the number of iterations as an RGBA color value
-            pixel_idx = 4 * (array_x + width * array_y) as usize;
-
             if iterations < max_iterations {
                 pixel_color = &color_palette[iterations as usize];
-                results_array[pixel_idx]     = pixel_color.r as u8;
-                results_array[pixel_idx + 1] = pixel_color.g as u8;
-                results_array[pixel_idx + 2] = pixel_color.b as u8;
+                results_array[pixel_idx] = pixel_color.r as u8; pixel_idx += 1;
+                results_array[pixel_idx] = pixel_color.g as u8; pixel_idx += 1;
+                results_array[pixel_idx] = pixel_color.b as u8; pixel_idx += 1;
             }
             else {
-                results_array[pixel_idx]     = 0;
-                results_array[pixel_idx + 1] = 0;
-                results_array[pixel_idx + 2] = 0;
+                results_array[pixel_idx] = 0; pixel_idx += 1;
+                results_array[pixel_idx] = 0; pixel_idx += 1;
+                results_array[pixel_idx] = 0; pixel_idx += 1;
             }
-            results_array[pixel_idx + 3] = 255;
-            pixel_y += pixel_height;
+            results_array[pixel_idx] = 255; pixel_idx += 1;
+            pixel_x += pixel_width;
         }
-        pixel_y = y_0;
-        pixel_x += pixel_width;
+        pixel_x = x_0;
+        pixel_y += pixel_height;
     }
     return results_array;
 }
