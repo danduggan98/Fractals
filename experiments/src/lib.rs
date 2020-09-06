@@ -1,6 +1,6 @@
 use wasm_bindgen::prelude::*;
 
-pub struct Color {
+struct Color {
     r: u8,
     g: u8,
     b: u8
@@ -23,21 +23,26 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
     color_list.push(Color { r: 0, g: 48, b: 143 });    //Dark blue
     color_list.push(Color { r: 0, g: 0, b: 0 });       //Full black
 
-    let num_colors = color_list.len();
     let mut color_palette: Vec<Color> = Vec::new();
+    let num_colors = color_list.len();
     let section_width = max_iterations / (num_colors - 1) as u8;
 
+    let mut start_color: &Color;
+    let mut end_color: &Color = &color_list[0]; //Initialized here in case num_colors = 1
+    let (mut delta_r, mut delta_g, mut delta_b): (i32, i32, i32);
+    let (mut r_val, mut g_val, mut b_val): (i32, i32, i32);
+
     for _color_idx in 0..(num_colors - 1) { //Loop through all colors to make gradients between each
-        let start_color = &color_list[_color_idx];
-        let end_color   = &color_list[_color_idx + 1];
+        start_color = &color_list[_color_idx];
+        end_color   = &color_list[_color_idx + 1];
 
-        let delta_r = (end_color.r as i32 - start_color.r as i32) / section_width as i32;
-        let delta_g = (end_color.g as i32 - start_color.g as i32) / section_width as i32;
-        let delta_b = (end_color.b as i32 - start_color.b as i32) / section_width as i32;
+        delta_r = (end_color.r as i32 - start_color.r as i32) / section_width as i32;
+        delta_g = (end_color.g as i32 - start_color.g as i32) / section_width as i32;
+        delta_b = (end_color.b as i32 - start_color.b as i32) / section_width as i32;
 
-        let mut r_val = start_color.r as i32;
-        let mut g_val = start_color.g as i32;
-        let mut b_val = start_color.b as i32;
+        r_val = start_color.r as i32;
+        g_val = start_color.g as i32;
+        b_val = start_color.b as i32;
 
         for _palette_idx in 0..section_width {
             r_val += delta_r;
@@ -48,11 +53,8 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
     }
 
     //Rounding sometimes leaves a few indexes unfilled at the end - use the last color to fill in the gaps
-    let last_color_idx = color_list.len() - 1;
-    let last_color = &color_list[last_color_idx];
-
     while color_palette.len() < max_iterations as usize {
-        color_palette.push(Color { r: last_color.r, g: last_color.g, b: last_color.b });
+        color_palette.push(Color { r: end_color.r, g: end_color.g, b: end_color.b });
     }
 
     //////// GENERATING THE SET ////////
