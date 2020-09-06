@@ -1,5 +1,4 @@
-fractal_utils/target/
-fractal_utils/pkg/
-fractal_utils/Cargo.lock
-todo.txt
 node_modules
+todo.txt
+fractals/fractal_utils/target
+fractals/fractal_utils/Cargo.lock
