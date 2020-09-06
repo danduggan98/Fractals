@@ -3,7 +3,7 @@ mod lib;
 //Test the mandelbrot method
 fn main() {
     const MAX_ITERATIONS: u8 = 100;
-    let result = lib::mandelbrot(1000, 1000, -1.0, -0.5, 0.0, 0.5, 64); //Test value
+    let result = lib::mandelbrot(1000, 1000, -1.0, -0.5, 0.0, 0.5, 128); //Test value
     println!("There were {} points on the mandelbrot", check_fractal(result, MAX_ITERATIONS));
 }
 

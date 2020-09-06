@@ -5,6 +5,6 @@
         "wasm-server": "0.0.4"
     },
     "scripts": {
-        "refresh": "wasm-pack build --dev && node_modules/.bin/webpack && cd dist/ && ../node_modules/.bin/wasm-server"
+        "refresh": "cargo build && wasm-pack build --dev && node_modules/.bin/webpack && cd dist/ && ../node_modules/.bin/wasm-server"
     }
 }
