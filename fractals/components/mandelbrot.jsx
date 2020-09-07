@@ -6,28 +6,35 @@ const Y_MIN = -1.2;
 const Y_MAX = 1.2;
 const max_iterations = 128;
 
-const populateCanvas = async (x_0, x_1, y_0, y_1, iterations) => {
-    const wasm = await import('../fractal_utils/pkg');
+//Store our WASM module and canvas information in the global scope
+let wasm;
+let canvasContext, canvasWidth, canvasHeight;
 
-    //Find the canvas, get its dimensions
+const setupPage = async() => {
+    wasm = await import('../fractal_utils/pkg');
+
     const fractalCanvas = document.getElementById('mandelbrotCanvas');
-    const width  = fractalCanvas.width;
-    const height = fractalCanvas.height;
+    canvasWidth   = fractalCanvas.width;
+    canvasHeight  = fractalCanvas.height;
+    canvasContext = fractalCanvas.getContext('2d');
+}
 
-    //Run the function and save the result as an image
-    const data = wasm.mandelbrot(width, height, x_0, x_1, y_0, y_1, iterations);
+//Place our Mandelbrot data into the canvas
+const renderMandelbrot = async (x_0, x_1, y_0, y_1, iterations) => {
+    const data = wasm.mandelbrot(canvasWidth, canvasHeight, x_0, x_1, y_0, y_1, iterations);
     const fractalArray = new Uint8ClampedArray(data);
-    const fractalImage = new ImageData(fractalArray, width, height);
-
-    //Store the image in our canvas
-    const ctx = fractalCanvas.getContext('2d');
-    ctx.putImageData(fractalImage, 0, 0);
+    const fractalImage = new ImageData(fractalArray, canvasWidth, canvasHeight);
+    canvasContext.putImageData(fractalImage, 0, 0);
 }
 
 export default class Mandelbrot extends Component {
     async componentDidMount() {
+        console.time('WASM module loaded in');
+        await setupPage();
+        console.timeEnd('WASM module loaded in');
+
         console.time('Mandelbrot loaded in');
-        await populateCanvas(X_MIN, X_MAX, Y_MIN, Y_MAX, max_iterations);
+        await renderMandelbrot(X_MIN, X_MAX, Y_MIN, Y_MAX, max_iterations); //Render the default Mandelbrot on page load
         console.timeEnd('Mandelbrot loaded in');
     }
 
