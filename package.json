@@ -1,10 +1,8 @@
 {
-  "name": "fractal_utils",
-  "version": "1.0.0",
-  "description": "Helper functions for Fractals.io",
-  "main": "server.js",
-  "scripts": {
-      "start": "node server.js",
-      "build": "cd fractal_utils && wasm-pack build"
-  }
+    "name": "fractals",
+    "version": "0.0.2",
+    "description": "Explore the beauty of mathematics",
+    "scripts": {
+        "build": "cd fractals/fractal_utils && cargo build && wasm-pack build --dev && cd ../ && npm run build"
+    }
 }
