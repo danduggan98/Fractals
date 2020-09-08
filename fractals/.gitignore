@@ -32,3 +32,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+#Cargo outputs
+fractal_utils/target
+fractal_utils/Cargo.lock
