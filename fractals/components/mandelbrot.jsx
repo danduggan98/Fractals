@@ -42,7 +42,8 @@ export default class Mandelbrot extends Component {
     }
 
     //Zoom in a given percentage from a particular point (x,y)
-    zoomIn = async (x, y, percentage) => {
+    //Positive percentage = zoom in, negative percentage = zoom out
+    zoom = async (x, y, percentage) => {
         const zoomModifier = (1 - percentage) / 2;
         const x_radius = (this.state.x_1 - this.state.x_0) * zoomModifier;
         const y_radius = (this.state.y_1 - this.state.y_0) * zoomModifier;
@@ -86,11 +87,23 @@ export default class Mandelbrot extends Component {
                     ref='mandelbrotCanvas'
                     width={this.state.canvasWidth}
                     height={this.state.canvasHeight}
+
+                    //Left click -> zoom in
                     onClick={e => {
+                        e.preventDefault();
                         console.log(`Clicked at (${e.clientX},${e.clientY})`);
                         let [x, y] = this.canvasToRealCoords(e.clientX, e.clientY);
                         console.log(`Zooming in to (${x},${y})`);
-                        this.zoomIn(x, y, 0.35);
+                        this.zoom(x, y, 0.5);
+                    }}
+
+                    //Right click -> zoom out
+                    onContextMenu={e => {
+                        e.preventDefault(); //Don't show the right-click menu
+                        console.log(`Clicked at (${e.clientX},${e.clientY})`);
+                        let [x, y] = this.canvasToRealCoords(e.clientX, e.clientY);
+                        console.log(`Zooming in to (${x},${y})`);
+                        this.zoom(x, y, -0.5);
                     }}>
                 </canvas>
             </div>
