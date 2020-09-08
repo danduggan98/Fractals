@@ -62,6 +62,16 @@ export default class Mandelbrot extends Component {
         }, this.renderMandelbrot);
     }
 
+    canvasToRealCoords = (canvasX, canvasY) => {
+        console.log(`X+Y currently at (${this.state.x_0},${this.state.y_0})`);
+        const realWidth  = this.state.x_1 - this.state.x_0;
+        const realHeight = this.state.y_1 - this.state.y_0;
+
+        const realX = this.state.x_0 + realWidth * (canvasX / this.state.canvasWidth);
+        const realY = this.state.y_0 + realHeight * (canvasY / this.state.canvasHeight);
+        return [realX, realY];
+    }
+
     //Render the default Mandelbrot when the page loads
     async componentDidMount() {
         await this.setupPage();
@@ -72,7 +82,17 @@ export default class Mandelbrot extends Component {
         return (
             <div>
                 <div>mandelbrot!</div>
-                <canvas ref='mandelbrotCanvas' width={this.state.canvasWidth} height={this.state.canvasHeight}></canvas>
+                <canvas
+                    ref='mandelbrotCanvas'
+                    width={this.state.canvasWidth}
+                    height={this.state.canvasHeight}
+                    onClick={e => {
+                        console.log(`Clicked at (${e.clientX},${e.clientY})`);
+                        let [x, y] = this.canvasToRealCoords(e.clientX, e.clientY);
+                        console.log(`Zooming in to (${x},${y})`);
+                        this.zoomIn(x, y, 0.35);
+                    }}>
+                </canvas>
             </div>
         )
     }
