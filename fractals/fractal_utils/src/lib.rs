@@ -7,21 +7,16 @@ struct Color {
 }
 
 #[wasm_bindgen]
-pub fn mandelbrot(width: u32, height: u32, x_0: f64, x_1: f64, y_0: f64, y_1: f64, max_iterations: u8) -> Vec<u8> {
+pub fn mandelbrot(width: u32, height: u32, x_0: f64, x_1: f64, y_0: f64, y_1: f64, max_iterations: u8, colors: Vec<u8>) -> Vec<u8> {
     println!("Computing fractal using width {} and height {}", width, height);
 
     //////// COLOR SCHEME ////////
     
     //Create the color palette based on a list of colors
     let mut color_list: Vec<Color> = Vec::new();
-    color_list.push(Color { r: 0, g: 0, b: 0 });       //Full black
-    color_list.push(Color { r: 0, g: 0, b: 255 });     //Full blue
-    color_list.push(Color { r: 240, g: 255, b: 255 }); //Full white
-    color_list.push(Color { r: 200, g: 200, b: 200 }); //Near white
-    color_list.push(Color { r: 255, g: 204, b: 0 });   //Darker Yellow
-    color_list.push(Color { r: 190, g: 127, b: 0 });   //Yellow
-    color_list.push(Color { r: 0, g: 48, b: 143 });    //Dark blue
-    color_list.push(Color { r: 0, g: 0, b: 0 });       //Full black
+    for c in (0..colors.len()).step_by(3) {
+        color_list.push(Color { r: colors[c], g: colors[c+1], b: colors[c+2] });
+    }
 
     let mut color_palette: Vec<Color> = Vec::new();
     let num_colors = color_list.len();

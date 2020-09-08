@@ -4,6 +4,8 @@ const X_MIN = -2.0;
 const X_MAX = 0.5;
 const Y_MIN = -1.2;
 const Y_MAX = 1.2;
+//const colorArray = [0,0,0, 255,0,0, 0,255,0, 0,0,255];
+const colorArray = [0,0,0, 0,0,255, 240,255,255, 0,0,255, 200,200,200, 255,204,0, 190,127,0, 0,48,143, 0,0,0];
 
 export default class Mandelbrot extends Component {
     constructor() {
@@ -13,7 +15,7 @@ export default class Mandelbrot extends Component {
             x_1: X_MAX,
             y_0: Y_MIN,
             y_1: Y_MAX,
-            max_iterations: 128,
+            max_iterations: 255,
             wasm: null,
             mandelbrotContext: null,
             canvasHeight: 1000, //Eventually recieve these from props
@@ -34,7 +36,7 @@ export default class Mandelbrot extends Component {
         const data = this.state.wasm.mandelbrot(
             this.state.canvasWidth, this.state.canvasHeight,
             this.state.x_0, this.state.x_1, this.state.y_0,
-            this.state.y_1, this.state.max_iterations
+            this.state.y_1, this.state.max_iterations, colorArray
         );
         const fractalArray = new Uint8ClampedArray(data);
         const fractalImage = new ImageData(fractalArray, this.state.canvasWidth, this.state.canvasHeight);
