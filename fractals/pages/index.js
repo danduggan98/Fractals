@@ -7,8 +7,13 @@ export default function Home() {
             <Head>
                 <title>Fractals.io - Mandelbrot</title>
             </Head>
-            <div>Welcome to Fractals.io!</div>
-            <Mandelbrot />
+            <div id='title'>The Mandelbrot Set</div>
+            <div id='mandelbrotContainer'>
+                <Mandelbrot />
+                <div id='controls'>
+                    controls go here
+                </div>
+            </div>
         </div>
     )
 }
