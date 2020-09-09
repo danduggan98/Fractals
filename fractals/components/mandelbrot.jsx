@@ -8,6 +8,8 @@ export default class Mandelbrot extends Component {
         this.X_MAX = 0.5;
         this.Y_MIN = -1.2;
         this.Y_MAX = 1.2;
+        this.MAX_X_RADIUS = (this.X_MAX - this.X_MIN) / 2;
+        this.MAX_Y_RADIUS = (this.Y_MAX - this.Y_MIN) / 2;
         this.wasm = null;
         this.mandelbrotContext = null;
 
@@ -17,8 +19,8 @@ export default class Mandelbrot extends Component {
             y_0: this.Y_MIN,
             y_1: this.Y_MAX,
             max_iterations: 255,
-            canvasHeight: 1000, //Eventually recieve these from props
-            canvasWidth: 1000,
+            canvasHeight: 800, //Eventually recieve these from props
+            canvasWidth: 800,
             colorArray: [
                 0,0,0, 0,0,255, 240,255,255, 0,0,255, 200,200,200,
                 255,204,0, 190,127,0, 0,48,143, 0,0,0
@@ -46,17 +48,40 @@ export default class Mandelbrot extends Component {
 
     //Zoom in a given percentage from a particular point (x,y)
     //Positive percentage = zoom in, negative percentage = zoom out
+    //Automatically restricts the x, y, width, and height to fit within our boundaries
     zoom = async (x, y, percentage) => {
         const zoomModifier = (1 - percentage) / 2;
-        const x_radius = (this.state.x_1 - this.state.x_0) * zoomModifier;
-        const y_radius = (this.state.y_1 - this.state.y_0) * zoomModifier;
+        let x_radius = (this.state.x_1 - this.state.x_0) * zoomModifier;
+        let y_radius = (this.state.y_1 - this.state.y_0) * zoomModifier;
+
+        if (x_radius > this.MAX_X_RADIUS) x_radius = this.MAX_X_RADIUS;
+        if (y_radius > this.MAX_Y_RADIUS) y_radius = this.MAX_Y_RADIUS;
         console.log(`x_r = ${x_radius}, y_r = ${y_radius}`);
 
-        const new_x_0 = x - x_radius;
-        const new_x_1 = x + x_radius;
-        const new_y_0 = y - y_radius;
-        const new_y_1 = y + y_radius;
-        console.log(`NEW: ${new_x_0}, ${new_x_1}, ${new_y_0}, ${new_y_1}`);
+        let new_x_0 = x - x_radius;
+        let new_x_1 = x + x_radius;
+
+        if (new_x_0 < this.X_MIN) { //Keep x and y within the boundaries
+            new_x_0 = this.X_MIN;
+            new_x_1 = new_x_0 + (2 * x_radius);
+        }
+        else if (new_x_1 > this.X_MAX) {
+            new_x_1 = this.X_MAX;
+            new_x_0 = this.X_MAX - (2 * x_radius);
+        }
+
+        let new_y_0 = y - y_radius;
+        let new_y_1 = y + y_radius;
+
+        if (new_y_0 < this.Y_MIN) {
+            new_y_0 = this.Y_MIN;
+            new_y_1 = new_y_0 + (2 * y_radius);
+        }
+        else if (new_y_1 > this.Y_MAX) {
+            new_y_1 = this.Y_MAX;
+            new_y_0 = this.Y_MAX - (2 * y_radius);
+        }
+        console.log(`NEW: x_0: ${new_x_0}, x_1: ${new_x_1}, y_0: ${new_y_0}, y_1: ${new_y_1}`);
 
         this.setState({
             x_0: new_x_0,
