@@ -18,6 +18,8 @@ export default class Mandelbrot extends Component {
             x_1: this.X_MAX,
             y_0: this.Y_MIN,
             y_1: this.Y_MAX,
+            realWidth:  this.X_MAX - this.X_MIN,
+            realHeight: this.Y_MAX - this.Y_MIN,
             max_iterations: 255,
             canvasHeight: 800, //Eventually recieve these from props
             canvasWidth: 800,
@@ -51,8 +53,8 @@ export default class Mandelbrot extends Component {
     //Automatically restricts the x, y, width, and height to fit within our boundaries
     zoom = async (x, y, percentage) => {
         const zoomModifier = (1 - percentage) / 2;
-        let x_radius = (this.state.x_1 - this.state.x_0) * zoomModifier;
-        let y_radius = (this.state.y_1 - this.state.y_0) * zoomModifier;
+        let x_radius = this.state.realWidth  * zoomModifier;
+        let y_radius = this.state.realHeight * zoomModifier;
 
         if (x_radius > this.MAX_X_RADIUS) x_radius = this.MAX_X_RADIUS;
         if (y_radius > this.MAX_Y_RADIUS) y_radius = this.MAX_Y_RADIUS;
@@ -87,23 +89,22 @@ export default class Mandelbrot extends Component {
             x_0: new_x_0,
             x_1: new_x_1,
             y_0: new_y_0,
-            y_1: new_y_1
+            y_1: new_y_1,
+            realWidth:  new_x_1 - new_x_0,
+            realHeight: new_y_1 - new_y_0,
         }, this.renderMandelbrot);
     }
 
     canvasToRealCoords = (canvasX, canvasY) => {
         console.log(`X+Y currently at (${this.state.x_0},${this.state.y_0})`);
-        const realWidth  = this.state.x_1 - this.state.x_0;
-        const realHeight = this.state.y_1 - this.state.y_0;
-
-        const realX = this.state.x_0 + realWidth * (canvasX / this.state.canvasWidth);
-        const realY = this.state.y_0 + realHeight * (canvasY / this.state.canvasHeight);
+        const realX = this.state.x_0 + this.state.realWidth * (canvasX / this.state.canvasWidth);
+        const realY = this.state.y_0 + this.state.realHeight * (canvasY / this.state.canvasHeight);
         return [realX, realY];
     }
 
     getFocusCoordinates = () => {
-        const x = this.state.x_0 + ((this.state.x_1 - this.state.x_0) / 2);
-        const y = this.state.y_0 + ((this.state.y_1 - this.state.y_0) / 2);
+        const x = this.state.x_0 + (this.state.realWidth / 2);
+        const y = this.state.y_0 + (this.state.realHeight / 2);
         return [x, y];
     }
 
@@ -141,7 +142,7 @@ export default class Mandelbrot extends Component {
                     }}>
                 </canvas>
                 <div id='coordinates'>
-                    Current focus: ({focusX},{focusY});
+                    Current focus: ({focusX}, {focusY});
                 </div>
             </div>
         )
