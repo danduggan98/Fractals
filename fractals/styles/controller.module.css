@@ -5,5 +5,9 @@
 }
 
 #controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 25%;
     color: white;
 }
