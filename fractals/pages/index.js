@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Mandelbrot from '../components/mandelbrot';
+import MandelbrotController from '../components/mandelbrotController';
 
 export default function Home() {
     return (
@@ -8,11 +8,8 @@ export default function Home() {
                 <title>Fractals.io - Mandelbrot</title>
             </Head>
             <div id='title'>The Mandelbrot Set</div>
-            <div id='mandelbrotContainer'>
-                <Mandelbrot />
-                <div id='controls'>
-                    controls go here
-                </div>
+            <div id='controller'>
+                <MandelbrotController />
             </div>
         </div>
     )
