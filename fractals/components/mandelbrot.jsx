@@ -8,6 +8,8 @@ export default class Mandelbrot extends Component {
         this.X_MAX = 0.5;
         this.Y_MIN = -1.2;
         this.Y_MAX = 1.2;
+        this.wasm = null;
+        this.mandelbrotContext = null;
 
         this.state = {
             x_0: this.X_MIN,
@@ -15,8 +17,6 @@ export default class Mandelbrot extends Component {
             y_0: this.Y_MIN,
             y_1: this.Y_MAX,
             max_iterations: 255,
-            wasm: null,
-            mandelbrotContext: null,
             canvasHeight: 1000, //Eventually recieve these from props
             canvasWidth: 1000,
             colorArray: [
@@ -28,22 +28,20 @@ export default class Mandelbrot extends Component {
 
     //Load the canvas and WASM package into state
     setupPage = async() => {
-        this.setState({
-            wasm: await import('../fractal_utils/pkg'),
-            mandelbrotContext: this.refs.mandelbrotCanvas.getContext('2d')
-        })
+        this.wasm = await import('../fractal_utils/pkg');
+        this.mandelbrotContext = this.refs.mandelbrotCanvas.getContext('2d');
     }
 
     //Place our Mandelbrot data into the canvas
     renderMandelbrot = async () => {
-        const data = this.state.wasm.mandelbrot(
+        const data = this.wasm.mandelbrot(
             this.state.canvasWidth, this.state.canvasHeight,
             this.state.x_0, this.state.x_1, this.state.y_0,
             this.state.y_1, this.state.max_iterations, this.state.colorArray
         );
         const fractalArray = new Uint8ClampedArray(data);
         const fractalImage = new ImageData(fractalArray, this.state.canvasWidth, this.state.canvasHeight);
-        this.state.mandelbrotContext.putImageData(fractalImage, 0, 0);
+        this.mandelbrotContext.putImageData(fractalImage, 0, 0);
     }
 
     //Zoom in a given percentage from a particular point (x,y)
