@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import MandelbrotController from '../components/mandelbrotController';
+import Controller from '../components/controller';
 
 export default function Home() {
     return (
@@ -9,7 +9,7 @@ export default function Home() {
             </Head>
             <div id='title'>The Mandelbrot Set</div>
             <div id='controller'>
-                <MandelbrotController />
+                <Controller />
             </div>
         </div>
     )
