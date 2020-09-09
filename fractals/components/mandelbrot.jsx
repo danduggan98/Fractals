@@ -101,6 +101,12 @@ export default class Mandelbrot extends Component {
         return [realX, realY];
     }
 
+    getFocusCoordinates = () => {
+        const x = this.state.x_0 + ((this.state.x_1 - this.state.x_0) / 2);
+        const y = this.state.y_0 + ((this.state.y_1 - this.state.y_0) / 2);
+        return [x, y];
+    }
+
     //Render the default Mandelbrot when the page loads
     async componentDidMount() {
         await this.setupPage();
@@ -108,9 +114,9 @@ export default class Mandelbrot extends Component {
     }
 
     render() {
+        let [focusX, focusY] = this.getFocusCoordinates();
         return (
             <div>
-                <div>mandelbrot!</div>
                 <canvas
                     ref='mandelbrotCanvas'
                     width={this.state.canvasWidth}
@@ -134,6 +140,9 @@ export default class Mandelbrot extends Component {
                         this.zoom(x, y, -0.5);
                     }}>
                 </canvas>
+                <div id='coordinates'>
+                    Current focus: ({focusX},{focusY});
+                </div>
             </div>
         )
     }
