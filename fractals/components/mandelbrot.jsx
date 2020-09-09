@@ -136,7 +136,7 @@ export default class Mandelbrot extends Component {
                         this.zoom(x, y, -0.5);
                     }}>
                 </canvas>
-                <div id='coordinates'>
+                <div id={styles.coordinates}>
                     Current focus: ({focusX}, {focusY});
                 </div>
             </div>
