@@ -2,8 +2,8 @@ import { Component } from 'react';
 import styles from './../styles/mandelbrot.module.css';
 
 export default class Mandelbrot extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.X_MIN = -2.0;
         this.X_MAX = 0.5;
@@ -20,14 +20,7 @@ export default class Mandelbrot extends Component {
             y_0: this.Y_MIN,
             y_1: this.Y_MAX,
             realWidth:  this.X_MAX - this.X_MIN,
-            realHeight: this.Y_MAX - this.Y_MIN,
-            max_iterations: 128,
-            canvasHeight: 800, //Eventually recieve these from props
-            canvasWidth: 800,
-            colorArray: [
-                0,0,0, 0,0,255, 240,255,255, 0,0,255, 200,200,200,
-                255,204,0, 190,127,0, 0,48,143, 0,0,0
-            ]
+            realHeight: this.Y_MAX - this.Y_MIN
         }
     }
 
@@ -40,12 +33,12 @@ export default class Mandelbrot extends Component {
     //Place our Mandelbrot data into the canvas
     renderMandelbrot = async () => {
         const data = this.wasm.mandelbrot(
-            this.state.canvasWidth, this.state.canvasHeight,
+            this.props.canvasWidth, this.props.canvasHeight,
             this.state.x_0, this.state.x_1, this.state.y_0,
-            this.state.y_1, this.state.max_iterations, this.state.colorArray
+            this.state.y_1, this.props.maxIterations, this.props.colorArray
         );
         const fractalArray = new Uint8ClampedArray(data);
-        const fractalImage = new ImageData(fractalArray, this.state.canvasWidth, this.state.canvasHeight);
+        const fractalImage = new ImageData(fractalArray, this.props.canvasWidth, this.props.canvasHeight);
         this.mandelbrotContext.putImageData(fractalImage, 0, 0);
     }
 
@@ -98,8 +91,8 @@ export default class Mandelbrot extends Component {
 
     canvasToRealCoords = (canvasX, canvasY) => {
         console.log(`X+Y currently at (${this.state.x_0},${this.state.y_0})`);
-        const realX = this.state.x_0 + this.state.realWidth  * (canvasX / this.state.canvasWidth);
-        const realY = this.state.y_0 + this.state.realHeight * (canvasY / this.state.canvasHeight);
+        const realX = this.state.x_0 + this.state.realWidth  * (canvasX / this.props.canvasWidth);
+        const realY = this.state.y_0 + this.state.realHeight * (canvasY / this.props.canvasHeight);
         return [realX, realY];
     }
 
@@ -122,8 +115,8 @@ export default class Mandelbrot extends Component {
                 <canvas
                     id={styles.mandelbrot}
                     ref='mandelbrotCanvas'
-                    width={this.state.canvasWidth}
-                    height={this.state.canvasHeight}
+                    width={this.props.canvasWidth}
+                    height={this.props.canvasHeight}
 
                     //Left click -> zoom in
                     onClick={e => {
