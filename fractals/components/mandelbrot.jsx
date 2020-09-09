@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import styles from './../styles/mandelbrot.module.css';
 
 export default class Mandelbrot extends Component {
     constructor() {
@@ -20,7 +21,7 @@ export default class Mandelbrot extends Component {
             y_1: this.Y_MAX,
             realWidth:  this.X_MAX - this.X_MIN,
             realHeight: this.Y_MAX - this.Y_MIN,
-            max_iterations: 255,
+            max_iterations: 128,
             canvasHeight: 800, //Eventually recieve these from props
             canvasWidth: 800,
             colorArray: [
@@ -97,7 +98,7 @@ export default class Mandelbrot extends Component {
 
     canvasToRealCoords = (canvasX, canvasY) => {
         console.log(`X+Y currently at (${this.state.x_0},${this.state.y_0})`);
-        const realX = this.state.x_0 + this.state.realWidth * (canvasX / this.state.canvasWidth);
+        const realX = this.state.x_0 + this.state.realWidth  * (canvasX / this.state.canvasWidth);
         const realY = this.state.y_0 + this.state.realHeight * (canvasY / this.state.canvasHeight);
         return [realX, realY];
     }
@@ -119,6 +120,7 @@ export default class Mandelbrot extends Component {
         return (
             <div>
                 <canvas
+                    id={styles.mandelbrot}
                     ref='mandelbrotCanvas'
                     width={this.state.canvasWidth}
                     height={this.state.canvasHeight}
