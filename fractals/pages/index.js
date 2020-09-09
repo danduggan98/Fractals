@@ -5,7 +5,7 @@ export default function Home() {
     return (
         <div>
             <Head>
-                Fractals.io - Mandelbrot
+                <title>Fractals.io - Mandelbrot</title>
             </Head>
             <div>Welcome to Fractals.io!</div>
             <Mandelbrot />
