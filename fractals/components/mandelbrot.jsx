@@ -1,18 +1,19 @@
 import { Component } from 'react';
 
-const X_MIN = -2.0;
-const X_MAX = 0.5;
-const Y_MIN = -1.2;
-const Y_MAX = 1.2;
-
 export default class Mandelbrot extends Component {
     constructor() {
         super();
+
+        this.X_MIN = -2.0;
+        this.X_MAX = 0.5;
+        this.Y_MIN = -1.2;
+        this.Y_MAX = 1.2;
+
         this.state = {
-            x_0: X_MIN,
-            x_1: X_MAX,
-            y_0: Y_MIN,
-            y_1: Y_MAX,
+            x_0: this.X_MIN,
+            x_1: this.X_MAX,
+            y_0: this.Y_MIN,
+            y_1: this.Y_MAX,
             max_iterations: 255,
             wasm: null,
             mandelbrotContext: null,
