@@ -2,18 +2,8 @@ body {
     background-color: black;
 }
 
-#mandelbrotContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
-
 #title {
     text-align: center;
     color: white;
     font-size: 28px;
-}
-
-#controls {
-    color: white;
 }

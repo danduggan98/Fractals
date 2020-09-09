@@ -1,0 +1,9 @@
+#mandelbrotContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#controls {
+    color: white;
+}
