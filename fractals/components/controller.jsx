@@ -1,12 +1,18 @@
 import { Component } from 'react';
+import { Range } from 'react-range';
 import Mandelbrot from './mandelbrot';
 import styles from './../styles/controller.module.css';
 
 export default class Controller extends Component {
     constructor() {
         super();
+
+        this.minIterations = 8;
+        this.maxIterations = 255;
+
         this.state = {
-            maxIterations: 128,
+            currentIterations: 128,
+            finalIterations: 128,
             canvasWidth: 800,
             canvasHeight: 800,
             colorArray: [
@@ -29,14 +35,54 @@ export default class Controller extends Component {
             <div>
                 <div id={styles.mandelbrotContainer}>
                     <Mandelbrot
-                        maxIterations={this.state.maxIterations}
+                        iterations={this.state.finalIterations}
                         canvasWidth={this.state.canvasWidth}
                         canvasHeight={this.state.canvasHeight}
                         colorArray={this.state.colorArray}>
                     </Mandelbrot>
                     <div id={styles.controls}>
                         controls go here
-                        <div>item 1</div>
+
+                        <div id='iterationSliderContainer'>
+                            <div>Less</div>
+                            <Range
+                                step={1}
+                                min={this.minIterations}
+                                max={this.maxIterations}
+                                values={[this.state.currentIterations]}
+                                onChange={values => this.setState({ currentIterations: values[0] })}
+                                onFinalChange={values => {
+                                    this.setState({ finalIterations: values[0]})
+                                    console.log('Final value:', values[0])
+                                }}
+                                renderTrack={({ props, children }) => (
+                                    <div
+                                        {...props}
+                                        style={{
+                                            ...props.style,
+                                            height: '3px',
+                                            width: '100%',
+                                            backgroundColor: '#ccc'
+                                        }}>
+                                        {children}
+                                    </div>
+                                )}
+                                renderThumb={({ props }) => (
+                                    <div
+                                        {...props}
+                                        style={{
+                                            ...props.style,
+                                            height: '30px',
+                                            width: '30px',
+                                            backgroundColor: '#ccc',
+                                            borderRadius: '20px',
+                                            border: '2px solid darkgrey'
+                                        }}>
+                                    </div>
+                                )}>
+                            </Range>
+                            <div>More</div>
+                        </div>
                         <div>item 2</div>
                     </div>
                 </div>

@@ -35,7 +35,7 @@ export default class Mandelbrot extends Component {
         const data = this.wasm.mandelbrot(
             this.props.canvasWidth, this.props.canvasHeight,
             this.state.x_0, this.state.x_1, this.state.y_0,
-            this.state.y_1, this.props.maxIterations, this.props.colorArray
+            this.state.y_1, this.props.iterations, this.props.colorArray
         );
         const fractalArray = new Uint8ClampedArray(data);
         const fractalImage = new ImageData(fractalArray, this.props.canvasWidth, this.props.canvasHeight);
@@ -106,6 +106,12 @@ export default class Mandelbrot extends Component {
     async componentDidMount() {
         await this.setupPage();
         await this.renderMandelbrot();
+    }
+
+    async componentDidUpdate(prevProps) {
+        if (prevProps.iterations !== this.props.iterations) {
+            await this.renderMandelbrot();
+        }
     }
 
     render() {
