@@ -16,6 +16,14 @@ export default class Controller extends Component {
         }
     }
 
+    componentDidMount() {
+        let diameter = window.innerHeight * 0.88;
+        this.setState({
+            canvasWidth: diameter,
+            canvasHeight: diameter
+        })
+    }
+
     render() {
         return (
             <div>
@@ -28,6 +36,8 @@ export default class Controller extends Component {
                     </Mandelbrot>
                     <div id={styles.controls}>
                         controls go here
+                        <div>item 1</div>
+                        <div>item 2</div>
                     </div>
                 </div>
             </div>
