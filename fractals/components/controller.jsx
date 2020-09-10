@@ -9,16 +9,17 @@ export default class Controller extends Component {
 
         this.minIterations = 8;
         this.maxIterations = 255;
+        let startingIterations = Math.ceil(this.maxIterations / 2);
 
         this.state = {
-            currentIterations: 128,
-            finalIterations: 128,
             canvasWidth: 800,
             canvasHeight: 800,
             colorArray: [
-                0,0,0, 0,0,255, 240,255,255, 0,0,255, 200,200,200,
+                0,0,0, 0,0,255, 240,255,255, 200,200,200,
                 255,204,0, 190,127,0, 0,48,143, 0,0,0
-            ]
+            ],
+            tempIterations: startingIterations,
+            currentIterations: startingIterations
         }
     }
 
@@ -35,7 +36,7 @@ export default class Controller extends Component {
             <div>
                 <div id={styles.mandelbrotContainer}>
                     <Mandelbrot
-                        iterations={this.state.finalIterations}
+                        iterations={this.state.currentIterations}
                         canvasWidth={this.state.canvasWidth}
                         canvasHeight={this.state.canvasHeight}
                         colorArray={this.state.colorArray}>
@@ -43,45 +44,50 @@ export default class Controller extends Component {
                     <div id={styles.controls}>
                         controls go here
 
-                        <div id='iterationSliderContainer'>
-                            <div>Less</div>
-                            <Range
-                                step={1}
-                                min={this.minIterations}
-                                max={this.maxIterations}
-                                values={[this.state.currentIterations]}
-                                onChange={values => this.setState({ currentIterations: values[0] })}
-                                onFinalChange={values => {
-                                    this.setState({ finalIterations: values[0]})
-                                    console.log('Final value:', values[0])
-                                }}
-                                renderTrack={({ props, children }) => (
-                                    <div
-                                        {...props}
-                                        style={{
-                                            ...props.style,
-                                            height: '3px',
-                                            width: '100%',
-                                            backgroundColor: '#ccc'
-                                        }}>
-                                        {children}
-                                    </div>
-                                )}
-                                renderThumb={({ props }) => (
-                                    <div
-                                        {...props}
-                                        style={{
-                                            ...props.style,
-                                            height: '30px',
-                                            width: '30px',
-                                            backgroundColor: '#ccc',
-                                            borderRadius: '20px',
-                                            border: '2px solid darkgrey'
-                                        }}>
-                                    </div>
-                                )}>
-                            </Range>
-                            <div>More</div>
+                        <div id={styles.iterationSliderContainer}>
+                            <div id={styles.iterationCounter}>Iterations: {this.state.tempIterations} </div>
+                            <div id={styles.iterationSlider}>
+                                <div id={styles.leftSliderLabel}>
+                                    Less
+                                </div>
+                                <Range
+                                    step={1}
+                                    min={this.minIterations}
+                                    max={this.maxIterations}
+                                    values={[this.state.tempIterations]}
+                                    onChange={values => this.setState({ tempIterations: values[0] })}
+                                    onFinalChange={values => this.setState({ currentIterations: values[0] })}
+                                    renderTrack={({ props, children }) => (
+                                        <div
+                                            {...props}
+                                            style={{
+                                                ...props.style,
+                                                height: '3px',
+                                                width: '100%',
+                                                backgroundColor: 'white'
+                                            }}>
+                                            {children}
+                                        </div>
+                                    )}
+                                    renderThumb={({ props }) => (
+                                        <div
+                                            {...props}
+                                            style={{
+                                                ...props.style,
+                                                height: '28px',
+                                                width: '28px',
+                                                backgroundColor: 'darkblue',
+                                                borderRadius: '20px',
+                                                border: '2px solid lightgrey'
+                                            }}>
+                                        </div>
+                                    )}>
+                                </Range>
+                                <div id={styles.rightSliderLabel}>More</div>
+                            </div>
+                            <div id={styles.iterationDescription}>
+                                More iterations yield a crisper image but take longer to calculate
+                            </div>
                         </div>
                         <div>item 2</div>
                     </div>
