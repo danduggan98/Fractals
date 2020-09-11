@@ -25,7 +25,8 @@ export default class Controller extends Component {
             tempIterations: startingIterations,
             currentIterations: startingIterations,
             tempZoom: startingZoom,
-            currentZoom: startingZoom
+            currentZoom: startingZoom,
+            resetRequested: false
         }
     }
 
@@ -34,6 +35,18 @@ export default class Controller extends Component {
         this.setState({
             canvasWidth: diameter,
             canvasHeight: diameter
+        })
+    }
+
+    reset = () => {
+        this.setState({
+            resetRequested: true
+        })
+    }
+
+    resetCompleted = () => {
+        this.setState({
+            resetRequested: false
         })
     }
 
@@ -47,14 +60,16 @@ export default class Controller extends Component {
                         canvasWidth={this.state.canvasWidth}
                         canvasHeight={this.state.canvasHeight}
                         colorArray={this.state.colorArray}
-                        zoomDepth={this.state.currentZoom}>
+                        zoomDepth={this.state.currentZoom}
+                        reset={this.state.resetRequested}
+                        resetCompleted={this.resetCompleted.bind(this)}>
                     </Mandelbrot>
 
                     <div id={styles.controls}>
-                        <div class={styles.controlContainer}>
-                            <div class={styles.controlCounter}>Iterations: {this.state.tempIterations}</div>
-                            <div class={styles.controlSlider}>
-                                <div class={styles.leftSliderLabel}>Less</div>
+                        <div className={styles.controlContainer}>
+                            <div className={styles.controlCounter}>Iterations: {this.state.tempIterations}</div>
+                            <div className={styles.controlSlider}>
+                                <div className={styles.leftSliderLabel}>Less</div>
 
                                 <Range
                                     step={1}
@@ -92,17 +107,17 @@ export default class Controller extends Component {
                                     )}>
                                 </Range>
 
-                                <div class={styles.rightSliderLabel}>More</div>
+                                <div className={styles.rightSliderLabel}>More</div>
                             </div>
-                            <div class={styles.controlDescription}>
+                            <div className={styles.controlDescription}>
                                 More iterations yield a crisper image but take longer to calculate
                             </div>
                         </div>
 
-                        <div class={styles.controlContainer}>
-                            <div class={styles.controlCounter}>Zoom Speed: {(100 * this.state.tempZoom).toFixed(0)}%</div>
-                            <div class={styles.controlSlider}>
-                                <div class={styles.leftSliderLabel}>Less</div>
+                        <div className={styles.controlContainer}>
+                            <div className={styles.controlCounter}>Zoom Speed: {(100 * this.state.tempZoom).toFixed(0)}%</div>
+                            <div className={styles.controlSlider}>
+                                <div className={styles.leftSliderLabel}>Less</div>
 
                                 <Range
                                     step={0.01}
@@ -140,14 +155,16 @@ export default class Controller extends Component {
                                     )}>
                                 </Range>
 
-                                <div class={styles.rightSliderLabel}>More</div>
+                                <div className={styles.rightSliderLabel}>More</div>
                             </div>
-                            <div class={styles.controlDescription}>
+                            <div className={styles.controlDescription}>
                                 Go deeper with each zoom
                             </div>
                         </div>
                         
                         <div>item 3</div>
+
+                        <button id={styles.resetButton} onClick={this.reset}>Reset</button>
                     </div>
                 </div>
             </div>

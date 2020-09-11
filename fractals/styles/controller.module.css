@@ -44,3 +44,8 @@
     font-size: 14px;
     margin-top: 20px;
 }
+
+#resetButton {
+    width: 20%;
+    margin: 0 auto;
+}

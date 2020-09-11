@@ -25,7 +25,7 @@ export default class Mandelbrot extends Component {
     }
 
     //Load the canvas and WASM package into state
-    setupPage = async() => {
+    setupPage = async () => {
         this.wasm = await import('../fractal_utils/pkg');
         this.mandelbrotContext = this.refs.mandelbrotCanvas.getContext('2d');
     }
@@ -102,6 +102,19 @@ export default class Mandelbrot extends Component {
         return [x, y];
     }
 
+    //Return the Mandelbrot to its starting values
+    resetView = () => {
+        this.props.resetCompleted();
+        this.setState({
+            x_0: this.X_MIN,
+            x_1: this.X_MAX,
+            y_0: this.Y_MIN,
+            y_1: this.Y_MAX,
+            realWidth:  this.X_MAX - this.X_MIN,
+            realHeight: this.Y_MAX - this.Y_MIN
+        }, this.renderMandelbrot)
+    }
+
     //Render the default Mandelbrot when the page loads
     async componentDidMount() {
         await this.setupPage();
@@ -109,6 +122,9 @@ export default class Mandelbrot extends Component {
     }
 
     async componentDidUpdate(prevProps) {
+        if (this.props.reset) {
+            this.resetView();
+        }
         if (prevProps.iterations !== this.props.iterations) {
             await this.renderMandelbrot();
         }
@@ -116,6 +132,7 @@ export default class Mandelbrot extends Component {
 
     render() {
         let [focusX, focusY] = this.getFocusCoordinates();
+
         return (
             <div>
                 <canvas
@@ -143,7 +160,7 @@ export default class Mandelbrot extends Component {
                     }}>
                 </canvas>
                 <div id={styles.coordinates}>
-                    Current focus: ({focusX}, {focusY});
+                    Current focus: ({focusX}, {focusY})
                 </div>
             </div>
         )
