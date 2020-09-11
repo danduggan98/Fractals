@@ -2,8 +2,8 @@ import { Component } from 'react';
 import styles from './../styles/mandelbrot.module.css';
 
 export default class Mandelbrot extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.X_MIN = -2.0;
         this.X_MAX = 0.5;
@@ -130,7 +130,7 @@ export default class Mandelbrot extends Component {
                         console.log(`Clicked at (${e.clientX},${e.clientY})`);
                         let [x, y] = this.canvasToRealCoords(e.clientX, e.clientY);
                         console.log(`Zooming in to (${x},${y})`);
-                        this.zoom(x, y, 0.5);
+                        this.zoom(x, y, this.props.zoomDepth);
                     }}
 
                     //Right click -> zoom out
@@ -139,7 +139,7 @@ export default class Mandelbrot extends Component {
                         console.log(`Clicked at (${e.clientX},${e.clientY})`);
                         let [x, y] = this.canvasToRealCoords(e.clientX, e.clientY);
                         console.log(`Zooming in to (${x},${y})`);
-                        this.zoom(x, y, -0.5);
+                        this.zoom(x, y, -1 * this.props.zoomDepth);
                     }}>
                 </canvas>
                 <div id={styles.coordinates}>
