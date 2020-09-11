@@ -8,7 +8,7 @@ export default class Controller extends Component {
         super();
 
         this.minIterations = 8;
-        this.maxIterations = 255;
+        this.maxIterations = 512;
         let startingIterations = Math.ceil(this.maxIterations / 2);
 
         this.minZoom = 0.1;
