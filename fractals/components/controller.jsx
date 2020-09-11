@@ -62,9 +62,11 @@ export default class Controller extends Component {
                                             {...props}
                                             style={{
                                                 ...props.style,
-                                                height: '3px',
+                                                height: '5px',
                                                 width: '100%',
-                                                backgroundColor: 'white'
+                                                borderRadius: '20px',
+                                                backgroundColor: 'white',
+                                                transform: 'translate(0px, 7px)'
                                             }}>
                                             {children}
                                         </div>
@@ -74,8 +76,8 @@ export default class Controller extends Component {
                                             {...props}
                                             style={{
                                                 ...props.style,
-                                                height: '28px',
-                                                width: '28px',
+                                                height: '26px',
+                                                width: '26px',
                                                 backgroundColor: 'darkblue',
                                                 borderRadius: '20px',
                                                 border: '2px solid lightgrey'
