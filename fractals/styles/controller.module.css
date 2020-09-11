@@ -48,4 +48,15 @@
 #resetButton {
     width: 20%;
     margin: 0 auto;
+    border: 1px solid white;
+    padding: 5px;
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+    background-color:rgb(50,50,50);
+}
+
+#resetButton:hover {
+    cursor: pointer;
+    background-color: rgb(70,70,70);
 }
