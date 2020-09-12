@@ -90,7 +90,7 @@ export default class Controller extends Component {
                 P.r, P.g, P.b,
                 S.r, S.g, S.b,
                 T.r, T.g, T.b,
-                0,0,0
+                255,255,255
             ]
         })
     }
