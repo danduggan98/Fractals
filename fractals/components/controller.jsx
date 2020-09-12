@@ -44,14 +44,14 @@ export default class Controller extends Component {
         });
     }
 
-    reset = () => {
+    //Ask the Mandelbrot component to render with the starting boundaries
+    resetView = () => {
         this.setState({
-            resetRequested: true,
-            tempIterations: this.startingIterations,
-            currentIterations: this.startingIterations
+            resetRequested: true
         });
     }
 
+    //Child triggers this when a reset is complete to avoid multiple re-renders
     resetCompleted = () => {
         this.setState({
             resetRequested: false
@@ -115,8 +115,31 @@ export default class Controller extends Component {
         }, this.updateColorArray);
     }
 
-    resetColorPreset = () => {
-        this.loadColorPreset(this.colorPreset1);
+    resetColors = () => {
+        this.setState({
+            selectedPreset: 1
+        }, this.loadColorPreset(this.colorPreset1));
+    }
+
+    resetZoom = () => {
+        this.setState({
+            tempZoom: this.startingZoom,
+            currentZoom: this.startingZoom
+        });
+    }
+
+    resetIterations = () => {
+        this.setState({
+            tempIterations: this.startingIterations,
+            currentIterations: this.startingIterations
+        });
+    }
+
+    startOver = () => {
+        this.resetView();
+        this.resetIterations();
+        this.resetZoom();
+        this.resetColors();
     }
 
     render() {
@@ -235,10 +258,13 @@ export default class Controller extends Component {
                             <div className={styles.controlCounter}>Color Scheme</div>
                             <div id={styles.presetSelector}>
                                 <span>Presets: </span>
-                                <select id={styles.colorPresets} onChange={this.changePreset} value={this.state.selectedPreset}>
-                                    <option value='1'>Default</option>
-                                    <option value='2'>Blaze</option>
-                                    <option value='3'>Neon</option>
+                                <select
+                                    id={styles.colorPresets}
+                                    onChange={this.changePreset}
+                                    value={this.state.selectedPreset}>
+                                        <option value='1'>Default</option>
+                                        <option value='2'>Blaze</option>
+                                        <option value='3'>Neon</option>
                                 </select>
                             </div>
                             <span>Custom:</span>
@@ -307,10 +333,11 @@ export default class Controller extends Component {
                                     Tertiary
                                 </div>
 
+                                <button id={styles.colorResetButton} onClick={this.resetColors}>Reset</button>
                             </div>
                         </div>
 
-                        <button id={styles.resetButton} onClick={this.reset}>Reset</button>
+                        <button id={styles.startOverButton} onClick={this.startOver}>Start Over</button>
                     </div>
                 </div>
             </div>
