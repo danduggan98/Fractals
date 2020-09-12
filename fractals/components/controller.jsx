@@ -17,15 +17,18 @@ export default class Controller extends Component {
         let startingZoom = (this.minZoom + this.maxZoom) / 2;
 
         this.startingPrimaryColor = { r: 0, g: 0, b: 255 };
-        this.startingSecondaryColor = { r: 255, g: 200, b: 200 };
+        this.startingSecondaryColor = { r: 255, g: 243, b: 71 };
         this.startingTertiaryColor = { r: 255, g: 255, b: 255 };
 
         this.state = {
             canvasWidth: 800,
             canvasHeight: 800,
             colorArray: [
-                0,0,0, 0,0,255, 240,255,255, 200,200,200,
-                255,204,0, 190,127,0, 0,48,143, 0,0,0
+                0,0,0,
+                this.startingPrimaryColor.r, this.startingPrimaryColor.g, this.startingPrimaryColor.b,
+                this.startingSecondaryColor.r, this.startingSecondaryColor.g, this.startingSecondaryColor.b,
+                this.startingTertiaryColor.r, this.startingTertiaryColor.g, this.startingTertiaryColor.b,
+                0,0,0
             ],
             tempIterations: startingIterations,
             currentIterations: startingIterations,
@@ -272,7 +275,7 @@ export default class Controller extends Component {
                                     </div>
                                     Tertiary
                                 </div>
-                                
+
                             </div>
                         </div>
 
