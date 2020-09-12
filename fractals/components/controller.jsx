@@ -9,35 +9,30 @@ export default class Controller extends Component {
         super();
 
         this.minIterations = 8;
-        this.maxIterations = 512;
-        let startingIterations = Math.ceil(this.maxIterations / 2);
+        this.maxIterations = 1000;
+        this.startingIterations = 128;
 
         this.minZoom = 0.1;
         this.maxZoom = 0.9;
-        let startingZoom = (this.minZoom + this.maxZoom) / 2;
+        this.startingZoom = (this.minZoom + this.maxZoom) / 2;
 
-        this.startingPrimaryColor = { r: 0, g: 0, b: 255 };
-        this.startingSecondaryColor = { r: 255, g: 243, b: 71 };
-        this.startingTertiaryColor = { r: 255, g: 255, b: 255 };
+        this.colorPreset1 = [0,0,0, 0,0,255, 255,243,71, 255,255,255, 255,255,255]; //Blue, Yellow, White
+        this.colorPreset2 = [0,0,0, 226,85,9, 255,243,71, 255,255,255, 255,255,255]; //Orange, Yellow, White
+        this.colorPreset3 = [0,0,0, 24,171,34, 9,222,239, 231,74,235, 255,255,255]; //Green, Blue, Purple
 
         this.state = {
             canvasWidth: 800,
             canvasHeight: 800,
-            colorArray: [
-                0,0,0,
-                this.startingPrimaryColor.r, this.startingPrimaryColor.g, this.startingPrimaryColor.b,
-                this.startingSecondaryColor.r, this.startingSecondaryColor.g, this.startingSecondaryColor.b,
-                this.startingTertiaryColor.r, this.startingTertiaryColor.g, this.startingTertiaryColor.b,
-                0,0,0
-            ],
-            tempIterations: startingIterations,
-            currentIterations: startingIterations,
-            tempZoom: startingZoom,
-            currentZoom: startingZoom,
+            colorArray: this.colorPreset1,
+            tempIterations: this.startingIterations,
+            currentIterations: this.startingIterations,
+            tempZoom: this.startingZoom,
+            currentZoom: this.startingZoom,
             resetRequested: false,
-            primaryColor: this.startingPrimaryColor,
-            secondaryColor: this.startingSecondaryColor,
-            tertiaryColor: this.startingTertiaryColor
+            primaryColor: { r: this.colorPreset1[3], g: this.colorPreset1[4], b: this.colorPreset1[5] },
+            secondaryColor: { r: this.colorPreset1[6], g: this.colorPreset1[7], b: this.colorPreset1[8] },
+            tertiaryColor: { r: this.colorPreset1[9], g: this.colorPreset1[10], b: this.colorPreset1[11] },
+            selectedPreset: 1
         }
     }
 
@@ -51,7 +46,9 @@ export default class Controller extends Component {
 
     reset = () => {
         this.setState({
-            resetRequested: true
+            resetRequested: true,
+            tempIterations: this.startingIterations,
+            currentIterations: this.startingIterations
         })
     }
 
@@ -79,20 +76,42 @@ export default class Controller extends Component {
         }, this.updateColorArray);
     }
 
-    updateColorArray = () => {
-        let P = this.state.primaryColor;
-        let S = this.state.secondaryColor;
-        let T = this.state.tertiaryColor;
+    updateColorArray = (preset) => {
+        if (preset) {
+            this.setState({
+                colorArray: preset
+            })
+        }
+        else {
+            let P = this.state.primaryColor;
+            let S = this.state.secondaryColor;
+            let T = this.state.tertiaryColor;
+    
+            this.setState({
+                colorArray: [
+                    0,0,0,
+                    P.r, P.g, P.b,
+                    S.r, S.g, S.b,
+                    T.r, T.g, T.b,
+                    255,255,255
+                ]
+            })
+        }
+    }
+
+    loadColorPreset = (event) => {
+        const selection = Number(event.target.value);
+        let preset = this.colorPreset1;
+        
+        switch(selection) {
+            case 1: preset = this.colorPreset1; break;
+            case 2: preset = this.colorPreset2; break;
+            case 3: preset = this.colorPreset3; break;
+        }
 
         this.setState({
-            colorArray: [
-                0,0,0,
-                P.r, P.g, P.b,
-                S.r, S.g, S.b,
-                T.r, T.g, T.b,
-                255,255,255
-            ]
-        })
+            selectedPreset: selection
+        }, this.updateColorArray(preset))
     }
 
     render() {
@@ -209,8 +228,15 @@ export default class Controller extends Component {
                         
                         <div className={styles.controlContainer}>
                             <div className={styles.controlCounter}>Color Scheme</div>
-                            <div>Presets:</div>
-                            <div>Custom:</div>
+                            <div id={styles.presetSelector}>
+                                <span>Presets: </span>
+                                <select id={styles.colorPresets} onChange={this.loadColorPreset} value={this.state.selectedPreset}>
+                                    <option value='1'>Default</option>
+                                    <option value='2'>Blaze</option>
+                                    <option value='3'>Neon</option>
+                                </select>
+                            </div>
+                            <span>Custom:</span>
                             <div id={styles.colorBoxArea}>
 
                                 <div className={styles.colorBoxContainer}>
