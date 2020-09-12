@@ -41,7 +41,7 @@ export default class Controller extends Component {
         this.setState({
             canvasWidth: diameter,
             canvasHeight: diameter
-        })
+        });
     }
 
     reset = () => {
@@ -49,13 +49,13 @@ export default class Controller extends Component {
             resetRequested: true,
             tempIterations: this.startingIterations,
             currentIterations: this.startingIterations
-        })
+        });
     }
 
     resetCompleted = () => {
         this.setState({
             resetRequested: false
-        })
+        });
     }
 
     updatePrimaryColor = (color) => {
@@ -76,27 +76,20 @@ export default class Controller extends Component {
         }, this.updateColorArray);
     }
 
-    updateColorArray = (preset) => {
-        if (preset) {
-            this.setState({
-                colorArray: preset
-            })
-        }
-        else {
-            let P = this.state.primaryColor;
-            let S = this.state.secondaryColor;
-            let T = this.state.tertiaryColor;
-    
-            this.setState({
-                colorArray: [
-                    0,0,0,
-                    P.r, P.g, P.b,
-                    S.r, S.g, S.b,
-                    T.r, T.g, T.b,
-                    255,255,255
-                ]
-            })
-        }
+    updateColorArray = () => {
+        let P = this.state.primaryColor;
+        let S = this.state.secondaryColor;
+        let T = this.state.tertiaryColor;
+
+        this.setState({
+            colorArray: [
+                0,0,0,
+                P.r, P.g, P.b,
+                S.r, S.g, S.b,
+                T.r, T.g, T.b,
+                255,255,255
+            ]
+        });
     }
 
     loadColorPreset = (event) => {
@@ -110,8 +103,11 @@ export default class Controller extends Component {
         }
 
         this.setState({
-            selectedPreset: selection
-        }, this.updateColorArray(preset))
+            selectedPreset: selection,
+            primaryColor: { r: preset[3], g: preset[4], b: preset[5] },
+            secondaryColor: { r: preset[6], g: preset[7], b: preset[8] },
+            tertiaryColor: { r: preset[9], g: preset[10], b: preset[11] }
+        }, this.updateColorArray);
     }
 
     render() {
