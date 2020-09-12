@@ -92,22 +92,31 @@ export default class Controller extends Component {
         });
     }
 
-    loadColorPreset = (event) => {
+    changePreset = (event) => {
         const selection = Number(event.target.value);
-        let preset = this.colorPreset1;
+        let preset;
         
         switch(selection) {
             case 1: preset = this.colorPreset1; break;
             case 2: preset = this.colorPreset2; break;
             case 3: preset = this.colorPreset3; break;
+            default: preset = this.colorPreset1; break;
         }
-
         this.setState({
-            selectedPreset: selection,
+            selectedPreset: selection
+        }, this.loadColorPreset(preset));
+    }
+
+    loadColorPreset = (preset) => {
+        this.setState({
             primaryColor: { r: preset[3], g: preset[4], b: preset[5] },
             secondaryColor: { r: preset[6], g: preset[7], b: preset[8] },
             tertiaryColor: { r: preset[9], g: preset[10], b: preset[11] }
         }, this.updateColorArray);
+    }
+
+    resetColorPreset = () => {
+        this.loadColorPreset(this.colorPreset1);
     }
 
     render() {
@@ -226,7 +235,7 @@ export default class Controller extends Component {
                             <div className={styles.controlCounter}>Color Scheme</div>
                             <div id={styles.presetSelector}>
                                 <span>Presets: </span>
-                                <select id={styles.colorPresets} onChange={this.loadColorPreset} value={this.state.selectedPreset}>
+                                <select id={styles.colorPresets} onChange={this.changePreset} value={this.state.selectedPreset}>
                                     <option value='1'>Default</option>
                                     <option value='2'>Blaze</option>
                                     <option value='3'>Neon</option>
