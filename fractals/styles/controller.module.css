@@ -60,3 +60,39 @@
     cursor: pointer;
     background-color: rgb(70,70,70);
 }
+
+#colorBoxArea {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.colorBoxContainer {
+    padding: 20px;
+}
+
+.colorBox {
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border: 1px solid white;
+}
+
+.colorBox:hover { 
+    cursor: pointer;
+}
+
+.colorBoxContainer:hover .dropdownColorPicker {
+    display: block;
+}
+
+.dropdownColorPicker {
+    display: none;
+    position: relative;
+    left: 65px;
+    top: -1px;
+    z-index: 1;
+}

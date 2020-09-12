@@ -125,7 +125,8 @@ export default class Mandelbrot extends Component {
         if (this.props.reset) {
             this.resetView();
         }
-        if (prevProps.iterations !== this.props.iterations) {
+        if (prevProps.iterations !== this.props.iterations ||
+            prevProps.colorArray !== this.props.colorArray) {
             await this.renderMandelbrot();
         }
     }
