@@ -31,7 +31,7 @@ export default class Controller extends Component {
             currentIterations: this.startingIterations,
             tempZoom: this.startingZoom,
             currentZoom: this.startingZoom,
-            resetRequested: false,
+            imageResetRequested: false,
             primaryColor: { r: this.colorPreset1[3], g: this.colorPreset1[4], b: this.colorPreset1[5] },
             secondaryColor: { r: this.colorPreset1[6], g: this.colorPreset1[7], b: this.colorPreset1[8] },
             tertiaryColor: { r: this.colorPreset1[9], g: this.colorPreset1[10], b: this.colorPreset1[11] },
@@ -48,16 +48,16 @@ export default class Controller extends Component {
     }
 
     //Ask the Mandelbrot component to render with the starting boundaries
-    resetView = () => {
+    requestImageReset = () => {
         this.setState({
-            resetRequested: true
+            imageResetRequested: true
         });
     }
 
     //Child triggers this when a reset is complete to avoid multiple re-renders
-    resetCompleted = () => {
+    imageResetCompleted = () => {
         this.setState({
-            resetRequested: false
+            imageResetRequested: false
         });
     }
 
@@ -147,7 +147,7 @@ export default class Controller extends Component {
     }
 
     startOver = () => {
-        this.resetView();
+        this.requestImageReset();
         this.resetIterations();
         this.resetZoom();
         this.changePreset(1);
@@ -164,8 +164,8 @@ export default class Controller extends Component {
                         canvasHeight={this.state.canvasHeight}
                         colorArray={this.state.colorArray}
                         zoomDepth={this.state.currentZoom}
-                        reset={this.state.resetRequested}
-                        resetCompleted={this.resetCompleted.bind(this)}>
+                        imageResetRequested={this.state.imageResetRequested}
+                        imageResetCompleted={this.imageResetCompleted.bind(this)}>
                     </Mandelbrot>
 
                     <div id={styles.controls}>
