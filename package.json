@@ -3,6 +3,7 @@
     "version": "0.0.2",
     "description": "Explore the beauty of mathematics",
     "scripts": {
+        "start": "cd fractals && npm run dev",
         "build": "cd fractals/fractal_utils && cargo build && wasm-pack build --dev && cd ../ && npm run build",
         "refresh": "npm run build && cd fractals && npm run dev"
     }
