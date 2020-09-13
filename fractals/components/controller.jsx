@@ -92,33 +92,38 @@ export default class Controller extends Component {
         });
     }
 
-    changePreset = (event) => {
+    //Used from the preset selector
+    selectNewPreset = (event) => {
         const selection = Number(event.target.value);
+
+        this.setState({
+            selectedPreset: selection
+        }, this.loadColorPreset);
+    }
+
+    //Can be called anywhere
+    changePreset = (selection) => {
+        this.setState({
+            selectedPreset: selection
+        }, this.loadColorPreset);
+    }
+
+    loadColorPreset = () => {
+        let selection = this.state.selectedPreset;
         let preset;
-        
+
         switch(selection) {
             case 1: preset = this.colorPreset1; break;
             case 2: preset = this.colorPreset2; break;
             case 3: preset = this.colorPreset3; break;
             default: preset = this.colorPreset1; break;
         }
-        this.setState({
-            selectedPreset: selection
-        }, this.loadColorPreset(preset));
-    }
 
-    loadColorPreset = (preset) => {
         this.setState({
             primaryColor: { r: preset[3], g: preset[4], b: preset[5] },
             secondaryColor: { r: preset[6], g: preset[7], b: preset[8] },
             tertiaryColor: { r: preset[9], g: preset[10], b: preset[11] }
         }, this.updateColorArray);
-    }
-
-    resetColors = () => {
-        this.setState({
-            selectedPreset: 1
-        }, this.loadColorPreset(this.colorPreset1));
     }
 
     resetZoom = () => {
@@ -139,7 +144,7 @@ export default class Controller extends Component {
         this.resetView();
         this.resetIterations();
         this.resetZoom();
-        this.resetColors();
+        this.changePreset(1);
     }
 
     render() {
@@ -260,7 +265,7 @@ export default class Controller extends Component {
                                 <span>Presets: </span>
                                 <select
                                     id={styles.colorPresets}
-                                    onChange={this.changePreset}
+                                    onChange={this.selectNewPreset}
                                     value={this.state.selectedPreset}>
                                         <option value='1'>Default</option>
                                         <option value='2'>Blaze</option>
@@ -333,7 +338,7 @@ export default class Controller extends Component {
                                     Tertiary
                                 </div>
 
-                                <button id={styles.colorResetButton} onClick={this.resetColors}>Reset</button>
+                                <button id={styles.colorResetButton} onClick={this.loadColorPreset}>Reset</button>
                             </div>
                         </div>
 
