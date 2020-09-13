@@ -165,7 +165,8 @@ export default class Controller extends Component {
                         colorArray={this.state.colorArray}
                         zoomDepth={this.state.currentZoom}
                         imageResetRequested={this.state.imageResetRequested}
-                        imageResetCompleted={this.imageResetCompleted.bind(this)}>
+                        imageResetCompleted={this.imageResetCompleted.bind(this)}
+                        resetIterations={this.resetIterations.bind(this)}>
                     </Mandelbrot>
 
                     <div id={styles.controls}>

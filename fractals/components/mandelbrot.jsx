@@ -105,6 +105,7 @@ export default class Mandelbrot extends Component {
     //Return the Mandelbrot to its starting values
     resetView = () => {
         this.props.imageResetCompleted();
+        this.props.resetIterations();
         this.setState({
             x_0: this.X_MIN,
             x_1: this.X_MAX,
@@ -165,8 +166,8 @@ export default class Mandelbrot extends Component {
                         <div id={styles.coordinates}>
                             Current focus: ({focusX}, {focusY})
                         </div>
-                        <div>
-                            test!
+                        <div id={styles.zoomDepth}>
+                            Zoom Depth: __
                         </div>
                     </div>
                     <button id={styles.resetViewButton} onClick={this.resetView}>Reset View</button>
