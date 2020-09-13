@@ -20,7 +20,8 @@ export default class Mandelbrot extends Component {
             y_0: this.Y_MIN,
             y_1: this.Y_MAX,
             realWidth:  this.X_MAX - this.X_MIN,
-            realHeight: this.Y_MAX - this.Y_MIN
+            realHeight: this.Y_MAX - this.Y_MIN,
+            visibleArea: 1.0
         }
     }
 
@@ -79,6 +80,9 @@ export default class Mandelbrot extends Component {
         }
         console.log(`NEW: x_0: ${new_x_0}, x_1: ${new_x_1}, y_0: ${new_y_0}, y_1: ${new_y_1}`);
 
+        const currentArea = this.state.visibleArea;
+        const newArea = currentArea - (currentArea * percentage);
+
         this.setState({
             x_0: new_x_0,
             x_1: new_x_1,
@@ -86,6 +90,7 @@ export default class Mandelbrot extends Component {
             y_1: new_y_1,
             realWidth:  new_x_1 - new_x_0,
             realHeight: new_y_1 - new_y_0,
+            visibleArea: newArea
         }, this.renderMandelbrot);
     }
 
@@ -112,7 +117,8 @@ export default class Mandelbrot extends Component {
             y_0: this.Y_MIN,
             y_1: this.Y_MAX,
             realWidth:  this.X_MAX - this.X_MIN,
-            realHeight: this.Y_MAX - this.Y_MIN
+            realHeight: this.Y_MAX - this.Y_MIN,
+            visibleArea: 1.0
         }, this.renderMandelbrot)
     }
 
@@ -166,8 +172,8 @@ export default class Mandelbrot extends Component {
                         <div id={styles.coordinates}>
                             Current focus: ({focusX}, {focusY})
                         </div>
-                        <div id={styles.zoomDepth}>
-                            Zoom Depth: __
+                        <div id={styles.visibleArea}>
+                            Visible area: {this.state.visibleArea * 100}%
                         </div>
                     </div>
                     <button id={styles.resetViewButton} onClick={this.resetView}>Reset View</button>
