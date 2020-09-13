@@ -9,3 +9,29 @@
 #coordinates {
     color: white;
 }
+
+#details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+#detailsLeft {
+    font-size: 18px;
+}
+
+#resetViewButton {
+    border: 1px solid white;
+    max-height: 40px;
+    padding: 0 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+    background-color:rgb(50,50,50);
+}
+
+#resetViewButton:hover {
+    cursor: pointer;
+    background-color: rgb(70,70,70);
+}
