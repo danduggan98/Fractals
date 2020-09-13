@@ -16,9 +16,12 @@ export default class Controller extends Component {
         this.maxZoom = 0.9;
         this.startingZoom = (this.minZoom + this.maxZoom) / 2;
 
-        this.colorPreset1 = [0,0,0, 0,0,255, 255,243,71, 255,255,255, 255,255,255]; //Blue, Yellow, White
-        this.colorPreset2 = [0,0,0, 226,85,9, 255,243,71, 255,255,255, 255,255,255]; //Orange, Yellow, White
-        this.colorPreset3 = [0,0,0, 24,171,34, 9,222,239, 231,74,235, 255,255,255]; //Green, Blue, Purple
+        this.colorPreset1 = [0,0,0, 0,0,255, 255,243,71, 255,255,255, 255,255,255]; //Blue, Yellow, White (Default)
+        this.colorPreset2 = [0,0,0, 226,85,9, 255,243,71, 255,255,255, 255,255,255]; //Orange, Yellow, White (Blaze)
+        this.colorPreset3 = [0,0,0, 24,171,34, 9,222,239, 231,74,235, 255,255,255]; //Green, Cyan, Purple (Neon)
+        this.colorPreset4 = [0,0,0, 211,3,3, 184,184,184, 255,255,255, 255,255,255]; //Red, Grey, White (Sith)
+        this.colorPreset5 = [0,0,0, 255,255,255, 0,255,255, 255,255,255, 255,255,255]; //White, Cyan, White (Winter)
+        this.colorPreset6 = [0,0,0, 182,41,244, 255,255,255, 61,3,151, 255,255,255]; //Light Purple, White, Dark Purple (Amethyst)
 
         this.state = {
             canvasWidth: 800,
@@ -116,6 +119,9 @@ export default class Controller extends Component {
             case 1: preset = this.colorPreset1; break;
             case 2: preset = this.colorPreset2; break;
             case 3: preset = this.colorPreset3; break;
+            case 4: preset = this.colorPreset4; break;
+            case 5: preset = this.colorPreset5; break;
+            case 6: preset = this.colorPreset6; break;
             default: preset = this.colorPreset1; break;
         }
 
@@ -270,6 +276,9 @@ export default class Controller extends Component {
                                         <option value='1'>Default</option>
                                         <option value='2'>Blaze</option>
                                         <option value='3'>Neon</option>
+                                        <option value='4'>Sith</option>
+                                        <option value='5'>Winter</option>
+                                        <option value='6'>Amethyst</option>
                                 </select>
                             </div>
                             <div id={styles.colorBoxArea}>
