@@ -262,7 +262,7 @@ export default class Controller extends Component {
                         <div className={styles.controlContainer}>
                             <div className={styles.controlCounter}>Color Scheme</div>
                             <div id={styles.presetSelector}>
-                                <span>Presets: </span>
+                                <span id={styles.presetLabel}>Presets:</span>
                                 <select
                                     id={styles.colorPresets}
                                     onChange={this.selectNewPreset}
@@ -272,9 +272,8 @@ export default class Controller extends Component {
                                         <option value='3'>Neon</option>
                                 </select>
                             </div>
-                            <span>Custom:</span>
                             <div id={styles.colorBoxArea}>
-
+                                <span id={styles.customLabel}>Custom:</span>
                                 <div className={styles.colorBoxContainer}>
                                     <div
                                         className={styles.colorBox}
@@ -340,6 +339,7 @@ export default class Controller extends Component {
 
                                 <button id={styles.colorResetButton} onClick={this.loadColorPreset}>Reset</button>
                             </div>
+                            <div className={styles.controlDescription}>Select a preset color scheme or choose your own</div>
                         </div>
 
                         <button id={styles.startOverButton} onClick={this.startOver}>Start Over</button>
