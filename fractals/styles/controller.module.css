@@ -23,6 +23,28 @@
     margin-bottom: 24px;
 }
 
+.propertyHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.propertyResetButton {
+    border: 1px solid white;
+    max-height: 30px;
+    padding: 5px;
+    margin-left: 5px;
+    color: white;
+    background-color: black;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.propertyResetButton:hover {
+    cursor: pointer;
+    background-color: rgb(70,70,70);
+}
+
 #presetLabel {
     font-size: 17px;
     margin-right: 10px;

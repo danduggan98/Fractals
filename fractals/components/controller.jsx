@@ -16,7 +16,7 @@ export default class Controller extends Component {
         this.maxZoom = 0.9;
         this.startingZoom = (this.minZoom + this.maxZoom) / 2;
 
-        this.colorPreset1 = [0,0,0, 0,0,255, 255,243,71, 255,255,255, 255,255,255]; //Blue, Yellow, White (Default)
+        this.colorPreset1 = [0,0,0, 0,0,255, 255,255,0, 255,255,255, 255,255,255]; //Blue, Yellow, White (Default)
         this.colorPreset2 = [0,0,0, 226,85,9, 255,243,71, 255,255,255, 255,255,255]; //Orange, Yellow, White (Blaze)
         this.colorPreset3 = [0,0,0, 24,171,34, 9,222,239, 231,74,235, 255,255,255]; //Green, Cyan, Purple (Neon)
         this.colorPreset4 = [0,0,0, 211,3,3, 184,184,184, 255,255,255, 255,255,255]; //Red, Grey, White (Sith)
@@ -170,7 +170,10 @@ export default class Controller extends Component {
 
                     <div id={styles.controls}>
                         <div className={styles.controlContainer}>
-                            <div className={styles.controlCounter}>Iterations: {this.state.tempIterations}</div>
+                            <div className={styles.propertyHeader}>
+                                <div className={styles.controlCounter}>Iterations: {this.state.tempIterations}</div>
+                                <button className={styles.propertyResetButton} onClick={this.resetIterations}>Reset</button>
+                            </div>
                             <div className={styles.controlSlider}>
                                 <div className={styles.leftSliderLabel}>Less</div>
 
@@ -218,7 +221,10 @@ export default class Controller extends Component {
                         </div>
 
                         <div className={styles.controlContainer}>
-                            <div className={styles.controlCounter}>Zoom Speed: {(100 * this.state.tempZoom).toFixed(0)}%</div>
+                            <div className={styles.propertyHeader}>
+                                <div className={styles.controlCounter}>Zoom Speed: {(100 * this.state.tempZoom).toFixed(0)}%</div>
+                                <button className={styles.propertyResetButton} onClick={this.resetZoom}>Reset</button>
+                            </div>
                             <div className={styles.controlSlider}>
                                 <div className={styles.leftSliderLabel}>Less</div>
 
