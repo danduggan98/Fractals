@@ -10,7 +10,7 @@ export default class Controller extends Component {
 
         this.minIterations = 8;
         this.maxIterations = 1000;
-        this.startingIterations = 128;
+        this.startingIterations = 100;
 
         this.minZoom = 0.1;
         this.maxZoom = 0.9;
