@@ -7,25 +7,20 @@ struct Color {
 }
 
 #[wasm_bindgen]
-pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f32, max_iterations: u8) -> Vec<u8> {
+pub fn mandelbrot(width: u32, height: u32, x_0: f64, x_1: f64, y_0: f64, y_1: f64, max_iterations: u32, colors: Vec<u8>) -> Vec<u8> {
     println!("Computing fractal using width {} and height {}", width, height);
 
     //////// COLOR SCHEME ////////
     
     //Create the color palette based on a list of colors
     let mut color_list: Vec<Color> = Vec::new();
-    color_list.push(Color { r: 0, g: 0, b: 0 });       //Full black
-    color_list.push(Color { r: 0, g: 0, b: 255 });     //Full blue
-    color_list.push(Color { r: 240, g: 255, b: 255 }); //Full white
-    color_list.push(Color { r: 200, g: 200, b: 200 }); //Near white
-    color_list.push(Color { r: 255, g: 204, b: 0 });   //Darker Yellow
-    color_list.push(Color { r: 190, g: 127, b: 0 });   //Yellow
-    color_list.push(Color { r: 0, g: 48, b: 143 });    //Dark blue
-    color_list.push(Color { r: 0, g: 0, b: 0 });       //Full black
+    for c in (0..colors.len()).step_by(3) {
+        color_list.push(Color { r: colors[c], g: colors[c+1], b: colors[c+2] });
+    }
 
     let mut color_palette: Vec<Color> = Vec::new();
     let num_colors = color_list.len();
-    let section_width = max_iterations / (num_colors - 1) as u8;
+    let section_width = max_iterations / (num_colors - 1) as u32;
 
     let mut start_color: &Color;
     let mut end_color: &Color = &color_list[0]; //Initialized here in case num_colors = 1
@@ -64,12 +59,12 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f32, x_1: f32, y_0: f32, y_1: f3
     let mut results_array = vec![0; size];
 
     //Convert the pixels into real coordinates in the Mandelbrot's range
-    let pixel_width  = (x_1 - x_0) / (width as f32);
-    let pixel_height = (y_1 - y_0) / (height as f32);
+    let pixel_width  = (x_1 - x_0) / (width as f64);
+    let pixel_height = (y_1 - y_0) / (height as f64);
     println!("Using pixel width {} and pixel height {}", pixel_width, pixel_height);
 
     //Formula values
-    let (mut x, mut y, mut x_squared, mut y_squared, mut iterations): (f32, f32, f32, f32, u8);
+    let (mut x, mut y, mut x_squared, mut y_squared, mut iterations): (f64, f64, f64, f64, u32);
     let mut pixel_x = x_0;
     let mut pixel_y = y_0;
     let mut pixel_idx: usize = 0; //Keeps track of our location in the array

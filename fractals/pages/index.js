@@ -1,12 +1,17 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Mandelbrot from '../components/mandelbrot';
+import Head from 'next/head';
+import Controller from '../components/controller';
+import styles from '../styles/index.module.css';
 
 export default function Home() {
     return (
         <div>
-            <div>Welcome to Fractals.io!</div>
-            <Mandelbrot />
+            <Head>
+                <title>Fractals.io - Mandelbrot</title>
+            </Head>
+            <div id={styles.title}>The Mandelbrot Set</div>
+            <div id={styles.controller}>
+                <Controller />
+            </div>
         </div>
     )
 }
