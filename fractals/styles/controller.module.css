@@ -53,6 +53,7 @@
 }
 
 #autoCheckboxContainer {
+    visibility: hidden; /* TEMPORARY UNTIL ALGORITHM IS IMPROVED*/
     position: relative;
     top: 4px;
 }
