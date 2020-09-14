@@ -8,9 +8,13 @@ export default function Home() {
             <Head>
                 <title>Fractals.io - Mandelbrot</title>
             </Head>
-            <div id={styles.title}>The Mandelbrot Set</div>
-            <div id={styles.controller}>
-                <Controller />
+            <div id={styles.content}>
+                <div id={styles.controller}>
+                    <Controller />
+                </div>
+                <div id={styles.instructions}>
+                    Instructions
+                </div>
             </div>
         </div>
     )

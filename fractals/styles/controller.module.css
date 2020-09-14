@@ -12,6 +12,12 @@
     color: white;
 }
 
+#title {
+    text-align: center;
+    color: white;
+    font-size: 42px;
+}
+
 .controlContainer {
     border: 1px solid white;
     padding: 15px;

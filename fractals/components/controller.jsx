@@ -41,7 +41,7 @@ export default class Controller extends Component {
     }
 
     componentDidMount() {
-        let diameter = window.innerHeight * 0.88;
+        let diameter = window.innerHeight * 0.91;
         this.setState({
             canvasWidth: diameter,
             canvasHeight: diameter
@@ -186,6 +186,7 @@ export default class Controller extends Component {
                     </Mandelbrot>
 
                     <div id={styles.controls}>
+                        <div id={styles.title}>The Mandelbrot Set</div>
                         <div className={styles.controlContainer}>
                             <div className={styles.propertyHeader}>
                                 <div className={styles.controlCounter}>
@@ -200,7 +201,7 @@ export default class Controller extends Component {
                                             value={this.state.automaticIterations}
                                             onChange={this.changeAutomaticIterations}>
                                         </input>
-                                        <label id={styles.autoCheckBoxLabel} for='auto'>
+                                        <label id={styles.autoCheckBoxLabel} htmlFor='auto'>
                                             Automatic
                                         </label>
                                     </div>
