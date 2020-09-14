@@ -1,8 +1,8 @@
-#mandelbrot {
+.mandelbrot {
     border: 1px solid white;
 }
 
-#mandelbrot:hover {
+.mandelbrot:hover {
     cursor: zoom-in;
 }
 

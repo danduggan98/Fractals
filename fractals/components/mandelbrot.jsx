@@ -28,7 +28,7 @@ export default class Mandelbrot extends Component {
     //Load the canvas and WASM package into state
     setupPage = async () => {
         this.wasm = await import('../fractal_utils/pkg');
-        this.mandelbrotContext = this.refs.mandelbrotCanvas.getContext('2d');
+        this.mandelbrotContext = document.getElementById('mandelbrotCanvas').getContext('2d');
     }
 
     //Place our Mandelbrot data into the canvas
@@ -162,8 +162,8 @@ export default class Mandelbrot extends Component {
         return (
             <div>
                 <canvas
-                    id={styles.mandelbrot}
-                    ref='mandelbrotCanvas'
+                    id='mandelbrotCanvas'
+                    className={styles.mandelbrot}
                     width={this.props.canvasWidth}
                     height={this.props.canvasHeight}
 
