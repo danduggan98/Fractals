@@ -35,7 +35,8 @@ export default class Controller extends Component {
             primaryColor: { r: this.colorPreset1[3], g: this.colorPreset1[4], b: this.colorPreset1[5] },
             secondaryColor: { r: this.colorPreset1[6], g: this.colorPreset1[7], b: this.colorPreset1[8] },
             tertiaryColor: { r: this.colorPreset1[9], g: this.colorPreset1[10], b: this.colorPreset1[11] },
-            selectedPreset: 1
+            selectedPreset: 1,
+            automaticIterations: false
         }
     }
 
@@ -146,6 +147,19 @@ export default class Controller extends Component {
         });
     }
 
+    updateIterations = (iterations) => {
+        this.setState({
+            tempIterations: iterations,
+            currentIterations: iterations
+        })
+    }
+
+    changeAutomaticIterations = () => {
+        this.setState({
+            automaticIterations: (!this.state.automaticIterations)
+        })
+    }
+
     startOver = () => {
         this.requestImageReset();
         this.resetIterations();
@@ -165,6 +179,8 @@ export default class Controller extends Component {
                         colorArray={this.state.colorArray}
                         zoomDepth={this.state.currentZoom}
                         imageResetRequested={this.state.imageResetRequested}
+                        automaticIterations={this.state.automaticIterations}
+                        updateIterations={this.updateIterations.bind(this)}
                         imageResetCompleted={this.imageResetCompleted.bind(this)}
                         resetIterations={this.resetIterations.bind(this)}>
                     </Mandelbrot>
@@ -172,8 +188,28 @@ export default class Controller extends Component {
                     <div id={styles.controls}>
                         <div className={styles.controlContainer}>
                             <div className={styles.propertyHeader}>
-                                <div className={styles.controlCounter}>Iterations: {this.state.tempIterations}</div>
-                                <button className={styles.propertyResetButton} onClick={this.resetIterations}>Reset</button>
+                                <div className={styles.controlCounter}>
+                                    Iterations: {this.state.tempIterations}
+                                </div>
+                                <div id={styles.iterationsHeaderRight}>
+                                    <div id={styles.autoCheckboxContainer}>
+                                        <input
+                                            id={styles.autoCheckbox}
+                                            type='checkbox'
+                                            name='auto'
+                                            value={this.state.automaticIterations}
+                                            onChange={this.changeAutomaticIterations}>
+                                        </input>
+                                        <label id={styles.autoCheckBoxLabel} for='auto'>
+                                            Automatic
+                                        </label>
+                                    </div>
+                                    <button
+                                        className={styles.propertyResetButton}
+                                        onClick={this.resetIterations}>
+                                            Reset
+                                    </button>
+                                </div>
                             </div>
                             <div className={styles.controlSlider}>
                                 <div className={styles.leftSliderLabel}>Less</div>

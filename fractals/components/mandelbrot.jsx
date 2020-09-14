@@ -81,7 +81,8 @@ export default class Mandelbrot extends Component {
         console.log(`NEW: x_0: ${new_x_0}, x_1: ${new_x_1}, y_0: ${new_y_0}, y_1: ${new_y_1}`);
 
         const currentArea = this.state.visibleArea;
-        const newArea = currentArea - (currentArea * percentage);
+        let newArea = currentArea - (currentArea * percentage);
+        newArea = (newArea > 1) ? 1 : newArea;
 
         this.setState({
             x_0: new_x_0,
@@ -91,7 +92,14 @@ export default class Mandelbrot extends Component {
             realWidth:  new_x_1 - new_x_0,
             realHeight: new_y_1 - new_y_0,
             visibleArea: newArea
-        }, this.renderMandelbrot);
+        }, async () => {
+            if (this.props.automaticIterations) {
+                this.props.updateIterations(
+                    this.getAutomaticIterations()
+                );
+            }
+            await this.renderMandelbrot();
+        });
     }
 
     canvasToRealCoords = (canvasX, canvasY) => {
@@ -120,6 +128,16 @@ export default class Mandelbrot extends Component {
             realHeight: this.Y_MAX - this.Y_MIN,
             visibleArea: 1.0
         }, this.renderMandelbrot)
+    }
+
+    //Use a power model (calculated with Desmos) to automatically determine the iterations
+    //Depends only on zoom depth
+    getAutomaticIterations = () => {
+        let a = 103;
+        let b = -0.211526;
+        let x = this.state.visibleArea;
+
+        return Math.ceil(a * Math.pow(x, b));
     }
 
     //Render the default Mandelbrot when the page loads
