@@ -32,3 +32,7 @@
     cursor: pointer;
     background-color: rgb(70,70,70);
 }
+
+#visibleArea {
+    margin-top: 1px;
+}

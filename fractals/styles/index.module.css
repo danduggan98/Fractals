@@ -1,15 +1,44 @@
 #controller {
-    height: 90vh;
+    min-height: 90vh;
     margin-top: 5px;
 }
 
 #content {
     display: flex;
     flex-direction: column;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#help {
+    color: lightgrey;
+    margin: 100px 10% 0 10%;
+    line-height: 1.75;
+    font-size: 16px;
+}
+
+#help a:visited {
+    color: inherit
 }
 
 #instructions {
-    margin: 150px 10% 50px 10%;
-    margin-top: 150px;
-    color: white;
+    border: 1px solid grey;
+    padding: 20px;
+    box-shadow: 0px 0px 5px white;
+    border-radius: 20px;
+}
+
+#instructionsHeader {
+    font-size: 20px;
+}
+
+#QA {
+    margin-top: 50px;
+    border: 1px solid grey;
+    padding: 20px;
+    box-shadow: 0px 0px 5px white;
+    border-radius: 20px;
+}
+
+#QAHeader {
+    font-size: 20px;
 }

@@ -396,6 +396,7 @@ export default class Controller extends Component {
                         </div>
 
                         <button id={styles.startOverButton} onClick={this.startOver}>Start Over</button>
+                        <span id={styles.helpNotice}>Scroll down for more detailed instructions</span>
                     </div>
                 </div>
             </div>

@@ -173,3 +173,9 @@
     top: -2px;
     z-index: 1;
 }
+
+#helpNotice {
+    text-align: center;
+    font-size: 14px;
+    color: lightgrey;
+}
