@@ -3,7 +3,7 @@
 }
 
 .mandelbrot:hover {
-    cursor: zoom-in;
+    cursor: crosshair;
 }
 
 #details {
