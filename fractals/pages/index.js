@@ -16,7 +16,7 @@ export default function Home() {
                     <div id={styles.instructions}>
                         <span id={styles.instructionsHeader}>Instructions</span>
                         <ul type='disc'>
-                            <li>Left-click anywhere on the image to zoom into that point, or right-click to zoom out from that point.</li>
+                            <li>Left-click anywhere on the image to zoom in to that point, or right-click to zoom out from that point.</li>
                                 <ul type='square'><li>The amount you zoom depends on the zoom speed, which can be adjusted with the slider on the right.</li></ul>
                             <li>You can adjust image quality by changing the number of iterations with the slider on the right. More iterations = more detail.</li>
                             <li>Change the color scheme by choosing a preset or by hovering over each colored box and then selecting a new color from the menu that appears.</li>
@@ -33,20 +33,20 @@ export default function Home() {
                     <div id={styles.QA}>
                         <span id={styles.QAHeader}>Q+A</span>
                         <ul type='disc'>
-                            <li>Q: Why is my image blurry?</li>
+                            <li>Q: Why is the image blurry?</li>
                                 <ul type='square'><li>A: You may need to increase the number of iterations. 
                                     The farther you zoom, the more iterations are needed for a clear image.</li>
                                 </ul>
                             <li>Q: Why is it suddenly taking much longer to zoom?</li>
-                                <ul type='square'><li>A: If you have increased the number of iterations, it will take longer for the image to calculate.
-                                    You will also experience longer loads in areas with large black regions.</li>
+                                <ul type='square'><li>A: If you have significantly increased the number of iterations, it will take longer 
+                                    for the image to calculate. You will also experience longer loads in areas with large black regions.</li>
                                 </ul>
                             <li>Q: What exactly is the Mandelbrot set?</li>
                                 <ul type='square'>
                                     <li>A: Everything you see is generated from a very simple mathematical formula. 
-                                        We plug the coordinates of each pixel into a formula and then assign it a 
+                                        We plug the coordinates of each pixel into this formula and then assign it a 
                                         color based on how quickly the value grows. You can read all about it&nbsp;
-                                        <a href='https://en.wikipedia.org/wiki/Mandelbrot_set'>here</a>
+                                        <a target="_blank" rel="noopener noreferrer" href='https://en.wikipedia.org/wiki/Mandelbrot_set'>here</a>.
                                     </li>
                                 </ul>
                             <li>Q: Are you going to add more fractals in the future?</li>
@@ -55,8 +55,9 @@ export default function Home() {
                                     Check back regularly for updates and improvements.</li>
                                 </ul>
                             <li>Q: How did you build this?</li>
-                                <ul type='square'><li>A: Rust, Webassembly, and React. Check out our Github page for the open-source&nbsp;
-                                    <a href='https://github.com/danduggan98/Fractals'>code</a>, and feel free to contribute anything you want!</li>
+                                <ul type='square'><li>A: Rust, Webassembly, and React. If that means anything to you, check out our Github page for the open-source&nbsp;
+                                    <a target="_blank" rel="noopener noreferrer" href='https://github.com/danduggan98/Fractals'>code</a>,
+                                     and feel free to contribute anything you want!</li>
                                 </ul>
                         </ul>
                     </div>

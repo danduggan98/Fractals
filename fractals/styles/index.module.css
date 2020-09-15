@@ -11,13 +11,18 @@
 
 #help {
     color: lightgrey;
-    margin: 100px 10% 0 10%;
-    line-height: 1.75;
-    font-size: 16px;
+    margin: 80px auto 0 auto;
+    line-height: 1.5;
+    font-size: 15px;
+    width: 65%;
+}
+
+#help a {
+    color: cyan
 }
 
 #help a:visited {
-    color: inherit
+    color: cyan
 }
 
 #instructions {
@@ -28,11 +33,11 @@
 }
 
 #instructionsHeader {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 #QA {
-    margin-top: 50px;
+    margin-top: 25px;
     border: 1px solid grey;
     padding: 20px;
     box-shadow: 0px 0px 5px white;
@@ -40,5 +45,5 @@
 }
 
 #QAHeader {
-    font-size: 20px;
+    font-size: 18px;
 }
