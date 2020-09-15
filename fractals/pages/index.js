@@ -37,7 +37,7 @@ export default function Home() {
 
                     <div id={styles.QA}>
                         <input id='QACollapsible' className={styles.collapsible + ' ' + styles.toggle} type='checkbox'></input>
-                        <label htmlFor='QACollapsible' className={styles.toggleLabel + ' ' + styles.QAHeader}>QA</label>
+                        <label htmlFor='QACollapsible' className={styles.toggleLabel + ' ' + styles.QAHeader}>Q&amp;A</label>
                         <div className={styles.collapsibleContent}>
                             <ul type='disc'>
                                 <li>Q: Why is the image blurry?</li>
