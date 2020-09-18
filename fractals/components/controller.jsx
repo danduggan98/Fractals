@@ -16,7 +16,7 @@ export default class Controller extends Component {
         this.maxZoom = 0.9;
         this.startingZoom = (this.minZoom + this.maxZoom) / 2;
 
-        this.colorPreset1 = [0,0,0, 0,0,255, 255,255,255, 255,255,0, 255,255,255]; //Blue, White, Yellow (Default)
+        this.colorPreset1 = [0,0,0, 0,0,255, 255,255,255, 255,203,5, 255,255,255]; //Blue, White, Yellow (Default)
         this.colorPreset2 = [0,0,0, 226,85,9, 255,243,71, 255,255,255, 255,255,255]; //Orange, Yellow, White (Blaze)
         this.colorPreset3 = [0,0,0, 24,171,34, 9,222,239, 231,74,235, 255,255,255]; //Green, Cyan, Purple (Neon)
         this.colorPreset4 = [0,0,0, 211,3,3, 184,184,184, 255,255,255, 255,255,255]; //Red, Grey, White (Sith)
