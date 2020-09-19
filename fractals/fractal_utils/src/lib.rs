@@ -25,20 +25,20 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f64, x_1: f64, y_0: f64, y_1: f6
 
     let mut start_color: &Color;
     let mut end_color: &Color = &color_list[0]; //Initialized here in case num_colors = 1
-    let (mut delta_r, mut delta_g, mut delta_b): (i32, i32, i32);
-    let (mut r_val, mut g_val, mut b_val): (i32, i32, i32);
+    let (mut delta_r, mut delta_g, mut delta_b): (f32, f32, f32);
+    let (mut r_val, mut g_val, mut b_val): (f32, f32, f32);
 
     for _color_idx in 0..(num_colors - 1) { //Loop through all colors to make gradients between each
         start_color = &color_list[_color_idx];
         end_color   = &color_list[_color_idx + 1];
 
-        delta_r = (end_color.r as i32 - start_color.r as i32) / section_width as i32;
-        delta_g = (end_color.g as i32 - start_color.g as i32) / section_width as i32;
-        delta_b = (end_color.b as i32 - start_color.b as i32) / section_width as i32;
+        delta_r = (end_color.r as f32 - start_color.r as f32) / section_width as f32;
+        delta_g = (end_color.g as f32 - start_color.g as f32) / section_width as f32;
+        delta_b = (end_color.b as f32 - start_color.b as f32) / section_width as f32;
 
-        r_val = start_color.r as i32;
-        g_val = start_color.g as i32;
-        b_val = start_color.b as i32;
+        r_val = start_color.r as f32;
+        g_val = start_color.g as f32;
+        b_val = start_color.b as f32;
 
         for _palette_idx in 0..section_width {
             r_val += delta_r;
