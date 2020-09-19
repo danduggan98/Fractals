@@ -21,7 +21,7 @@ export default class Controller extends Component {
         this.colorPreset3 = [0,0,0, 0,255,0, 255,0,255, 0,255,255, 255,255,255]; //Green, Pink, Cyan (Neon)
         this.colorPreset4 = [0,0,0, 255,0,0, 255,255,255, 184,184,184, 255,255,255]; //Red, White, Grey (Sith)
         this.colorPreset5 = [0,0,0, 255,255,255, 0,255,255, 179,179,255, 255,255,255]; //White, Cyan, Blue (Winter)
-        this.colorPreset6 = [0,0,0, 182,41,244, 255,255,255, 61,3,151, 255,255,255]; //Light Purple, White, Dark Purple (Amethyst)
+        this.colorPreset6 = [0,0,0, 182,41,244, 255,255,255, 115,0,230, 255,255,255]; //Light Purple, White, Dark Purple (Amethyst)
 
         this.state = {
             canvasWidth: 800,
