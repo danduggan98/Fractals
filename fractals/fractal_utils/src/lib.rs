@@ -20,8 +20,8 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f64, x_1: f64, y_0: f64, y_1: f6
 
     let mut color_palette: Vec<Color> = Vec::new();
     let num_colors = color_list.len();
-    const PALETTE_SIZE: u32 = 1000;
-    let section_width = PALETTE_SIZE / (num_colors - 1) as u32;
+    let palette_size: u32 = max_iterations * 10;
+    let section_width = palette_size / (num_colors - 1) as u32;
 
     let mut start_color: &Color;
     let mut end_color: &Color = &color_list[0]; //Initialized here in case num_colors = 1
@@ -49,7 +49,7 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f64, x_1: f64, y_0: f64, y_1: f6
     }
 
     //Rounding sometimes leaves a few indexes unfilled at the end - use the last color to fill in the gaps
-    while color_palette.len() < PALETTE_SIZE as usize {
+    while color_palette.len() < palette_size as usize {
         color_palette.push(Color { r: end_color.r, g: end_color.g, b: end_color.b });
     }
 
@@ -73,8 +73,8 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f64, x_1: f64, y_0: f64, y_1: f6
 
     //Log constants used to determine shading
     let log_base = 1.0 / (2.0 as f64).log10();
-    //let log_half_base = (0.5 as f64).log10() * log_base;
-    let spread_multiplier: f64 = ((PALETTE_SIZE - 1) / max_iterations) as f64;
+    let log_half_base = (0.5 as f64).log10() * log_base;
+    let spread_multiplier: f64 = ((palette_size - 1) / max_iterations) as f64;
 
     //Calculate the result for each pixel
     for _array_y in 0..height {
@@ -93,17 +93,14 @@ pub fn mandelbrot(width: u32, height: u32, x_0: f64, x_1: f64, y_0: f64, y_1: f6
                 iterations += 1;
             }
 
-            //Store the number of iterations as an RGBA color value
+            //Store the number of iterations as an RGBA color value using logarithmic shading
             if iterations < max_iterations {
-                let z: f64 = (x_squared + y_squared).sqrt().abs();
-                let mu = ((iterations + 1) as f64) - (z.log10().log10() * log_base);
-                //let n = ((mu.floor() * spread_multiplier) % PALETTE_SIZE as f64) as usize;
+                let z: f64 = x_squared + y_squared;
+                let mu = ((iterations + 5) as f64) - log_half_base - (z.log10().log10() * log_base);
                 let n = (mu * spread_multiplier).floor() as usize;
-                //let n = (mu.floor() % PALETTE_SIZE as f64) as usize;
 
-                println!("iterations: {}, spread mult: {}, mu: {}, n:{}", iterations, spread_multiplier, mu, n);
+                //println!("iterations: {}, spread mult: {}, mu: {}, n:{}", iterations, spread_multiplier, mu, n);
 
-                //Use logarithmic shading to eliminate color banding
                 pixel_color = &color_palette[n];
                 results_array[pixel_idx]     = pixel_color.r as u8;
                 results_array[pixel_idx + 1] = pixel_color.g as u8;
