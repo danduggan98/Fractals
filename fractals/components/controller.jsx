@@ -8,19 +8,19 @@ export default class Controller extends Component {
     constructor() {
         super();
 
-        this.minIterations = 8;
+        this.minIterations = 64; //TEMPORARY UNTIL WE CAN FIX THE CRASHES UNDER 52
         this.maxIterations = 1000;
-        this.startingIterations = 100;
+        this.startingIterations = 128;
 
         this.minZoom = 0.1;
         this.maxZoom = 0.9;
         this.startingZoom = (this.minZoom + this.maxZoom) / 2;
 
-        this.colorPreset1 = [0,0,0, 0,0,255, 255,255,255, 255,203,5, 255,255,255]; //Blue, White, Yellow (Default)
+        this.colorPreset1 = [0,0,0, 0,0,255, 255,255,255, 255,203,5, 255,255,255]; //Blue, White, Gold (Default)
         this.colorPreset2 = [0,0,0, 226,85,9, 255,243,71, 255,255,255, 255,255,255]; //Orange, Yellow, White (Blaze)
-        this.colorPreset3 = [0,0,0, 24,171,34, 9,222,239, 231,74,235, 255,255,255]; //Green, Cyan, Purple (Neon)
-        this.colorPreset4 = [0,0,0, 211,3,3, 184,184,184, 255,255,255, 255,255,255]; //Red, Grey, White (Sith)
-        this.colorPreset5 = [0,0,0, 255,255,255, 0,255,255, 255,255,255, 255,255,255]; //White, Cyan, White (Winter)
+        this.colorPreset3 = [0,0,0, 0,255,0, 255,0,255, 0,255,255, 255,255,255]; //Green, Pink, Cyan (Neon)
+        this.colorPreset4 = [0,0,0, 255,0,0, 255,255,255, 184,184,184, 255,255,255]; //Red, White, Grey (Sith)
+        this.colorPreset5 = [0,0,0, 255,255,255, 0,255,255, 179,179,255, 255,255,255]; //White, Cyan, Blue (Winter)
         this.colorPreset6 = [0,0,0, 182,41,244, 255,255,255, 61,3,151, 255,255,255]; //Light Purple, White, Dark Purple (Amethyst)
 
         this.state = {
@@ -99,10 +99,7 @@ export default class Controller extends Component {
     //Used from the preset selector
     selectNewPreset = (event) => {
         const selection = Number(event.target.value);
-
-        this.setState({
-            selectedPreset: selection
-        }, this.loadColorPreset);
+        this.changePreset(selection);
     }
 
     //Can be called anywhere
