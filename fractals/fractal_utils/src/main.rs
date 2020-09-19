@@ -8,7 +8,7 @@ fn main() {
     //Measure performance
     use std::time::Instant;
     let now = Instant::now();
-    let _result = lib::mandelbrot(1000, 1000, -1.0, -0.5, 0.0, 0.5, MAX_ITERATIONS, arr);
+    let _result = lib::mandelbrot(1000, 1000, -2.0, 0.5, -1.2, 1.2, MAX_ITERATIONS, arr);
     let elapsed = now.elapsed();
 
     println!("Mandelbrot function completed successfully!");
