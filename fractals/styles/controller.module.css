@@ -18,6 +18,13 @@
     font-size: 42px;
 }
 
+#titleInstructions {
+    color: lightgrey;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
 .controlContainer {
     border: 1px solid white;
     padding: 15px;
