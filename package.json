@@ -1,10 +1,13 @@
 {
     "name": "fractals",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "description": "Explore the beauty of mathematics",
     "scripts": {
-        "start": "cd fractals && npm run dev",
-        "build": "cd fractals/fractal_utils && cargo build && wasm-pack build --dev && cd ../ && npm run build",
-        "refresh": "npm run build && cd fractals && npm run dev"
+        "start": "cd fractals && npm run start",
+        "dev": "cd fractals && npm run dev",
+        "build": "npm run build-rust && cd fractals && npm install && npm run build",
+        "build-rust": ". $HOME/.cargo/env && cd fractals/fractal_utils && cargo build && wasm-pack build --dev",
+        "install": "curl https://sh.rustup.rs -sSf | sh -s -- -y && . $HOME/.cargo/env && curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh -s -- -f -y",
+        "refresh": "npm run build && npm start"
     }
 }
