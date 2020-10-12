@@ -10,7 +10,7 @@ export default class Controller extends Component {
 
         this.minIterations = 64; //TEMPORARY UNTIL WE CAN FIX THE CRASHES UNDER 52
         this.maxIterations = 1000;
-        this.startingIterations = 128;
+        this.startingIterations = 100;
 
         this.minZoom = 0.1;
         this.maxZoom = 0.9;
@@ -24,8 +24,8 @@ export default class Controller extends Component {
         this.colorPreset6 = [0,0,0, 182,41,244, 255,255,255, 115,0,230, 255,255,255]; //Light Purple, White, Dark Purple (Amethyst)
 
         this.state = {
-            canvasWidth: 800,
-            canvasHeight: 800,
+            canvasWidth: 200,
+            canvasHeight: 200,
             colorArray: this.colorPreset1,
             tempIterations: this.startingIterations,
             currentIterations: this.startingIterations,
@@ -41,9 +41,9 @@ export default class Controller extends Component {
     }
 
     componentDidMount() {
-        let diameter = window.innerHeight * 0.91;
+        let diameter = Math.min(window.innerWidth, window.innerHeight) * 0.9;
         this.setState({
-            canvasWidth: diameter,
+            canvasWidth:  diameter,
             canvasHeight: diameter
         });
     }
