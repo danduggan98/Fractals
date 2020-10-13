@@ -67,19 +67,17 @@
 #iterationsHeaderRight {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 40%;
+    justify-content: flex-end;
+    width: 50%;
 }
 
 #autoCheckboxContainer {
-    visibility: hidden; /* TEMPORARY UNTIL ALGORITHM IS IMPROVED*/
     position: relative;
-    top: 4px;
+    margin-right: 10px;
 }
 
 #autoCheckbox {
     position: relative;
-    top: 2px;
     margin: 0 8px;
 }
 
