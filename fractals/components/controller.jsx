@@ -185,8 +185,8 @@ export default class Controller extends Component {
                     <div id={styles.controls}>
                         <div id={styles.title}>The Mandelbrot Set</div>
                         <div id={styles.titleInstructions}>
-                            <span>Left-click anywhere on the image to zoom in to that point,</span>
-                            <span>or right-click to zoom out from that point</span>
+                            <span>Left-click anywhere on the image to zoom in to that</span>
+                            <span>point, or right-click to zoom out from that point</span>
                         </div>
                         <div className={styles.controlContainer}>
                             <div className={styles.propertyHeader}>
