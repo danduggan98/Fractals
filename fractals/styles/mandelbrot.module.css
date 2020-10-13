@@ -10,12 +10,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 8px 0;
+    margin: 5px 0;
 }
 
 #detailsLeft {
     color: white;
-    font-size: 18px;
+    font-size: 15px;
 }
 
 #resetViewButton {
@@ -23,7 +23,7 @@
     max-height: 40px;
     padding: 0 10px;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     background-color:rgb(50,50,50);
 }

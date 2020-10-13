@@ -9,8 +9,8 @@ export default class Controller extends Component {
         super();
 
         this.minIterations = 64; //TEMPORARY UNTIL WE CAN FIX THE CRASHES UNDER 52
-        this.maxIterations = 1000;
-        this.startingIterations = 128;
+        this.startingIterations = 100;
+        this.startingMaxIterations = 200;
 
         this.minZoom = 0.1;
         this.maxZoom = 0.9;
@@ -24,26 +24,27 @@ export default class Controller extends Component {
         this.colorPreset6 = [0,0,0, 182,41,244, 255,255,255, 115,0,230, 255,255,255]; //Light Purple, White, Dark Purple (Amethyst)
 
         this.state = {
-            canvasWidth: 800,
-            canvasHeight: 800,
-            colorArray: this.colorPreset1,
-            tempIterations: this.startingIterations,
-            currentIterations: this.startingIterations,
-            tempZoom: this.startingZoom,
-            currentZoom: this.startingZoom,
+            canvasWidth:         200,
+            canvasHeight:        200,
+            colorArray:          this.colorPreset1,
+            maxIterations:       this.startingMaxIterations,
+            tempIterations:      this.startingIterations,
+            currentIterations:   this.startingIterations,
+            tempZoom:            this.startingZoom,
+            currentZoom:         this.startingZoom,
             imageResetRequested: false,
-            primaryColor: { r: this.colorPreset1[3], g: this.colorPreset1[4], b: this.colorPreset1[5] },
-            secondaryColor: { r: this.colorPreset1[6], g: this.colorPreset1[7], b: this.colorPreset1[8] },
-            tertiaryColor: { r: this.colorPreset1[9], g: this.colorPreset1[10], b: this.colorPreset1[11] },
-            selectedPreset: 1,
+            primaryColor:        { r: this.colorPreset1[3], g: this.colorPreset1[4],  b: this.colorPreset1[5] },
+            secondaryColor:      { r: this.colorPreset1[6], g: this.colorPreset1[7],  b: this.colorPreset1[8] },
+            tertiaryColor:       { r: this.colorPreset1[9], g: this.colorPreset1[10], b: this.colorPreset1[11] },
+            selectedPreset:      1,
             automaticIterations: false
         }
     }
 
     componentDidMount() {
-        let diameter = window.innerHeight * 0.91;
+        let diameter = Math.min(window.innerWidth, window.innerHeight) * 0.9;
         this.setState({
-            canvasWidth: diameter,
+            canvasWidth:  diameter,
             canvasHeight: diameter
         });
     }
@@ -114,39 +115,41 @@ export default class Controller extends Component {
         let preset;
 
         switch(selection) {
-            case 1: preset = this.colorPreset1; break;
-            case 2: preset = this.colorPreset2; break;
-            case 3: preset = this.colorPreset3; break;
-            case 4: preset = this.colorPreset4; break;
-            case 5: preset = this.colorPreset5; break;
-            case 6: preset = this.colorPreset6; break;
+            case 1:  preset = this.colorPreset1; break;
+            case 2:  preset = this.colorPreset2; break;
+            case 3:  preset = this.colorPreset3; break;
+            case 4:  preset = this.colorPreset4; break;
+            case 5:  preset = this.colorPreset5; break;
+            case 6:  preset = this.colorPreset6; break;
             default: preset = this.colorPreset1; break;
         }
 
         this.setState({
-            primaryColor: { r: preset[3], g: preset[4], b: preset[5] },
+            primaryColor:   { r: preset[3], g: preset[4], b: preset[5] },
             secondaryColor: { r: preset[6], g: preset[7], b: preset[8] },
-            tertiaryColor: { r: preset[9], g: preset[10], b: preset[11] }
+            tertiaryColor:  { r: preset[9], g: preset[10], b: preset[11] }
         }, this.updateColorArray);
     }
 
     resetZoom = () => {
         this.setState({
-            tempZoom: this.startingZoom,
+            tempZoom:    this.startingZoom,
             currentZoom: this.startingZoom
         });
     }
 
     resetIterations = () => {
         this.setState({
-            tempIterations: this.startingIterations,
+            maxIterations:     this.startingMaxIterations,
+            tempIterations:    this.startingIterations,
             currentIterations: this.startingIterations
         });
     }
 
     updateIterations = (iterations) => {
         this.setState({
-            tempIterations: iterations,
+            maxIterations:     iterations * 2,
+            tempIterations:    iterations,
             currentIterations: iterations
         })
     }
@@ -185,8 +188,8 @@ export default class Controller extends Component {
                     <div id={styles.controls}>
                         <div id={styles.title}>The Mandelbrot Set</div>
                         <div id={styles.titleInstructions}>
-                            <span>Left-click anywhere on the image to zoom in to that point,</span>
-                            <span>or right-click to zoom out from that point</span>
+                            <span>Left-click anywhere on the image to zoom in to that</span>
+                            <span>point, or right-click to zoom out from that point</span>
                         </div>
                         <div className={styles.controlContainer}>
                             <div className={styles.propertyHeader}>
@@ -219,10 +222,10 @@ export default class Controller extends Component {
                                 <Range
                                     step={1}
                                     min={this.minIterations}
-                                    max={this.maxIterations}
+                                    max={this.state.maxIterations}
                                     values={[this.state.tempIterations]}
                                     onChange={values => this.setState({ tempIterations: values[0] })}
-                                    onFinalChange={values => this.setState({ currentIterations: values[0] })}
+                                    onFinalChange={values => this.updateIterations(values[0])}
                                     renderTrack={({ props, children }) => (
                                         <div
                                             {...props}

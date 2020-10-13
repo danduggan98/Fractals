@@ -145,11 +145,16 @@ export default class Mandelbrot extends Component {
     }
 
     //Use a power model (calculated with Desmos) to automatically determine the iterations
-    //Depends only on zoom depth
+    //Depends only on the visible area
+    /*
+        POINTS USED TO CALCULATE:
+        (1,100), (.5,120), (.25,150),(.0625,185),(.03125,205),(.015625,240),(.0078125,260),(.00390625,300),
+        (.001953125,340),(.0009765625,360),(.000038146972,400),(.00000059605,500)
+    */
     getAutomaticIterations = () => {
-        let a = 103;
-        let b = -0.211526;
-        let x = this.state.visibleArea;
+        const x = this.state.visibleArea;
+        const a = 134.335;
+        const b = -0.112475;
 
         return Math.ceil(a * Math.pow(x, b));
     }
