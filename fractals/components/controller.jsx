@@ -9,8 +9,8 @@ export default class Controller extends Component {
         super();
 
         this.minIterations = 64; //TEMPORARY UNTIL WE CAN FIX THE CRASHES UNDER 52
-        this.maxIterations = 1000;
         this.startingIterations = 100;
+        this.startingMaxIterations = 200;
 
         this.minZoom = 0.1;
         this.maxZoom = 0.9;
@@ -24,18 +24,19 @@ export default class Controller extends Component {
         this.colorPreset6 = [0,0,0, 182,41,244, 255,255,255, 115,0,230, 255,255,255]; //Light Purple, White, Dark Purple (Amethyst)
 
         this.state = {
-            canvasWidth: 200,
-            canvasHeight: 200,
-            colorArray: this.colorPreset1,
-            tempIterations: this.startingIterations,
-            currentIterations: this.startingIterations,
-            tempZoom: this.startingZoom,
-            currentZoom: this.startingZoom,
+            canvasWidth:         200,
+            canvasHeight:        200,
+            colorArray:          this.colorPreset1,
+            maxIterations:       this.startingMaxIterations,
+            tempIterations:      this.startingIterations,
+            currentIterations:   this.startingIterations,
+            tempZoom:            this.startingZoom,
+            currentZoom:         this.startingZoom,
             imageResetRequested: false,
-            primaryColor: { r: this.colorPreset1[3], g: this.colorPreset1[4], b: this.colorPreset1[5] },
-            secondaryColor: { r: this.colorPreset1[6], g: this.colorPreset1[7], b: this.colorPreset1[8] },
-            tertiaryColor: { r: this.colorPreset1[9], g: this.colorPreset1[10], b: this.colorPreset1[11] },
-            selectedPreset: 1,
+            primaryColor:        { r: this.colorPreset1[3], g: this.colorPreset1[4], b: this.colorPreset1[5] },
+            secondaryColor:      { r: this.colorPreset1[6], g: this.colorPreset1[7], b: this.colorPreset1[8] },
+            tertiaryColor:       { r: this.colorPreset1[9], g: this.colorPreset1[10], b: this.colorPreset1[11] },
+            selectedPreset:      1,
             automaticIterations: false
         }
     }
@@ -139,13 +140,16 @@ export default class Controller extends Component {
 
     resetIterations = () => {
         this.setState({
+            maxIterations: this.startingMaxIterations,
             tempIterations: this.startingIterations,
             currentIterations: this.startingIterations
         });
     }
 
     updateIterations = (iterations) => {
+        const newMaxIterations = iterations * 2;
         this.setState({
+            maxIterations: newMaxIterations,
             tempIterations: iterations,
             currentIterations: iterations
         })
@@ -219,10 +223,10 @@ export default class Controller extends Component {
                                 <Range
                                     step={1}
                                     min={this.minIterations}
-                                    max={this.maxIterations}
+                                    max={this.state.maxIterations}
                                     values={[this.state.tempIterations]}
                                     onChange={values => this.setState({ tempIterations: values[0] })}
-                                    onFinalChange={values => this.setState({ currentIterations: values[0] })}
+                                    onFinalChange={values => this.updateIterations(values[0])}
                                     renderTrack={({ props, children }) => (
                                         <div
                                             {...props}
