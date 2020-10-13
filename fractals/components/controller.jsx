@@ -33,8 +33,8 @@ export default class Controller extends Component {
             tempZoom:            this.startingZoom,
             currentZoom:         this.startingZoom,
             imageResetRequested: false,
-            primaryColor:        { r: this.colorPreset1[3], g: this.colorPreset1[4], b: this.colorPreset1[5] },
-            secondaryColor:      { r: this.colorPreset1[6], g: this.colorPreset1[7], b: this.colorPreset1[8] },
+            primaryColor:        { r: this.colorPreset1[3], g: this.colorPreset1[4],  b: this.colorPreset1[5] },
+            secondaryColor:      { r: this.colorPreset1[6], g: this.colorPreset1[7],  b: this.colorPreset1[8] },
             tertiaryColor:       { r: this.colorPreset1[9], g: this.colorPreset1[10], b: this.colorPreset1[11] },
             selectedPreset:      1,
             automaticIterations: false
@@ -115,42 +115,41 @@ export default class Controller extends Component {
         let preset;
 
         switch(selection) {
-            case 1: preset = this.colorPreset1; break;
-            case 2: preset = this.colorPreset2; break;
-            case 3: preset = this.colorPreset3; break;
-            case 4: preset = this.colorPreset4; break;
-            case 5: preset = this.colorPreset5; break;
-            case 6: preset = this.colorPreset6; break;
+            case 1:  preset = this.colorPreset1; break;
+            case 2:  preset = this.colorPreset2; break;
+            case 3:  preset = this.colorPreset3; break;
+            case 4:  preset = this.colorPreset4; break;
+            case 5:  preset = this.colorPreset5; break;
+            case 6:  preset = this.colorPreset6; break;
             default: preset = this.colorPreset1; break;
         }
 
         this.setState({
-            primaryColor: { r: preset[3], g: preset[4], b: preset[5] },
+            primaryColor:   { r: preset[3], g: preset[4], b: preset[5] },
             secondaryColor: { r: preset[6], g: preset[7], b: preset[8] },
-            tertiaryColor: { r: preset[9], g: preset[10], b: preset[11] }
+            tertiaryColor:  { r: preset[9], g: preset[10], b: preset[11] }
         }, this.updateColorArray);
     }
 
     resetZoom = () => {
         this.setState({
-            tempZoom: this.startingZoom,
+            tempZoom:    this.startingZoom,
             currentZoom: this.startingZoom
         });
     }
 
     resetIterations = () => {
         this.setState({
-            maxIterations: this.startingMaxIterations,
-            tempIterations: this.startingIterations,
+            maxIterations:     this.startingMaxIterations,
+            tempIterations:    this.startingIterations,
             currentIterations: this.startingIterations
         });
     }
 
     updateIterations = (iterations) => {
-        const newMaxIterations = iterations * 2;
         this.setState({
-            maxIterations: newMaxIterations,
-            tempIterations: iterations,
+            maxIterations:     iterations * 2,
+            tempIterations:    iterations,
             currentIterations: iterations
         })
     }
