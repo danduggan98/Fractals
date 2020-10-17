@@ -18,7 +18,7 @@ export default class Controller extends Component {
 
         this.colorPreset1 = [0,0,0, 0,0,255, 255,255,255, 255,203,5, 255,255,255]; //Blue, White, Gold (Default)
         this.colorPreset2 = [0,0,0, 226,85,9, 255,243,71, 255,255,255, 255,255,255]; //Orange, Yellow, White (Blaze)
-        this.colorPreset3 = [0,0,0, 0,255,0, 255,0,255, 0,255,255, 255,255,255]; //Green, Pink, Cyan (Neon)
+        this.colorPreset3 = [0,0,0, 0,255,0, 0,255,255, 255,0,255, 255,255,255]; //Green, Cyan, Pink (Neon)
         this.colorPreset4 = [0,0,0, 255,0,0, 255,255,255, 184,184,184, 255,255,255]; //Red, White, Grey (Sith)
         this.colorPreset5 = [0,0,0, 255,255,255, 0,255,255, 179,179,255, 255,255,255]; //White, Cyan, Blue (Winter)
         this.colorPreset6 = [0,0,0, 182,41,244, 255,255,255, 115,0,230, 255,255,255]; //Light Purple, White, Dark Purple (Amethyst)
